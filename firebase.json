@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "frontend/build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "https://d1esk4cwpza4ag.cloudfront.net/",
+        "destination": "https://d1esk4cwpza4ag.cloudfront.net"
+      }
+    ],
+    "errorPage": "/notFound.html"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "CallerReference": "eb-backend-001",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "ElasticBeanstalkOrigin",
+        "DomainName": "e-health-backend.eba-pwg4ni28.us-west-2.elasticbeanstalk.com",
+        "CustomOriginConfig": {
+          "OriginProtocolPolicy": "http-only",
+          "HTTPPort": 80,
+          "HTTPSPort": 443,
+          "OriginSslProtocols": {
+            "Quantity": 1,
+            "Items": ["TLSv1.2"]
+          }
+        }
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "ElasticBeanstalkOrigin",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {
+      "Quantity": 7,
+      "Items": ["GET", "HEAD", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+      "CachedMethods": {
+        "Quantity": 2,
+        "Items": ["GET", "HEAD"]
+      }
+    },
+    "ForwardedValues": {
+      "QueryString": true,
+      "Cookies": { "Forward": "all" },
+      "Headers": {
+        "Quantity": 1,
+        "Items": ["Authorization"]
+      }
+    },
+    "MinTTL": 0
+  },
+  "Comment": "CloudFront for Elastic Beanstalk backend",
+  "Enabled": true
+}
