@@ -6,6 +6,27 @@ const { OpenAI } = require("openai");
 const auth = require("./middleware/auth");
 require("dotenv").config();
 const { RtcTokenBuilder, RtcRole } = require("agora-token");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+// Set up multer for file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const app = express();
 
@@ -19,6 +40,7 @@ const openai = new OpenAI({
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 // MongoDB Connection
 mongoose
@@ -99,6 +121,7 @@ const prescriptionSchema = new mongoose.Schema({
   doctorId: { type: String, required: true },
   patientId: { type: String, required: true },
   description: { type: String, required: true },
+  fileUrl: { type: String },
   deliveryStatus: {
     type: String,
     enum: ["pending", "sent", "rejected", "delivered"],
@@ -916,9 +939,15 @@ app.put("/doctors/appointments/:id/reject", auth, async (req, res) => {
 });
 
 // Upload Prescription
-app.post("/prescriptions", auth, async (req, res) => {
+// Upload Prescription
+app.post("/prescriptions", auth, upload.single("file"), async (req, res) => {
   try {
     const { appointmentId, description } = req.body;
+    let fileUrl = "";
+
+    if (req.file) {
+      fileUrl = `/uploads/${req.file.filename}`;
+    }
 
     const appointment = await Appointment.findById(appointmentId);
     if (!appointment) {
@@ -937,6 +966,7 @@ app.post("/prescriptions", auth, async (req, res) => {
       doctorId: doctor.doctorId,
       patientId: appointment.patientId,
       description,
+      fileUrl,
     });
 
     await prescription.save();
@@ -1051,6 +1081,7 @@ app.get("/patient/appointments/:patientId", auth, async (req, res) => {
           prescription: prescription ? prescription.description : null,
           deliveryStatus: prescription ? prescription.deliveryStatus : null,
           prescriptionId: prescription ? prescription._id : null,
+          fileUrl: prescription ? prescription.fileUrl : null,
         };
       })
     );
@@ -1169,7 +1200,8 @@ app.get("/pharmacy-address", async (req, res) => {
 });
 
 // Update Prescription
-app.put("/prescriptions/:appointmentId", auth, async (req, res) => {
+// Update Prescription
+app.put("/prescriptions/:appointmentId", auth, upload.single("file"), async (req, res) => {
   try {
     const { description } = req.body;
     const prescription = await Prescription.findOne({
@@ -1194,6 +1226,11 @@ app.put("/prescriptions/:appointmentId", auth, async (req, res) => {
     }
 
     prescription.description = description;
+
+    if (req.file) {
+      prescription.fileUrl = `/uploads/${req.file.filename}`;
+    }
+
     await prescription.save();
     res.json(prescription);
   } catch (error) {

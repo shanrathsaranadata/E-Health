@@ -20,26 +20,38 @@ const ECGGraphModal = ({ isOpen, onClose, patientName, sensorData }) => {
             setDataPoints((prev) => {
                 const newPoints = [...prev.slice(1)];
 
-                // Determine pattern from sensorData or use simulation
-                let pattern = [];
+                // User requested random pattern/simulation because real values are "not good"
+                // Standard PQRST Wave Pattern (approximate)
+                const pqrst = [
+                    50, 50, 50, 50, 50, 50, 50, 50, // Baseline
+                    52, 55, 58, 55, 52, 50,         // P wave
+                    50, 50, 50,                     // PR segment
+                    45, 95, 20, 50,                 // QRS complex (Down-Up-Down)
+                    50, 50, 50,                     // ST segment
+                    52, 58, 62, 58, 52, 50,         // T wave
+                    50, 50, 50, 50, 50              // Baseline
+                ];
 
+                // Cycle through the pattern
+                const index = tick % pqrst.length;
+
+                // User requested to multiply pattern by sensorData.ecg
+                let multiplier = 1;
                 if (sensorData?.ecg) {
-                    // Attempt to parse real data
-                    if (Array.isArray(sensorData.ecg)) {
-                        pattern = sensorData.ecg;
-                    } else if (typeof sensorData.ecg === 'string' && sensorData.ecg.includes(',')) {
-                        pattern = sensorData.ecg.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+                    const parsed = parseFloat(sensorData.ecg);
+                    if (!isNaN(parsed)) {
+                        multiplier = parsed;
                     }
                 }
 
-                // Fallback to simulation if no valid data
-                if (pattern.length < 5) {
-                    pattern = [50, 50];
-                }
+                // Apply multiplication
+                let val = pqrst[index] * multiplier;
 
-                const index = tick % pattern.length;
-                // Removed noise for clean line
-                newPoints.push(pattern[index]);
+                // Add slight noise relative to multiplier
+                const noise = (Math.random() * 2 - 1) * multiplier * 0.1;
+                val += noise;
+
+                newPoints.push(val);
 
                 tick++;
                 return newPoints;

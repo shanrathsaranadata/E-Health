@@ -21,7 +21,7 @@ const PatientProfile = () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
         const response = await axios.get(
-          "https://d1esk4cwpza4ag.cloudfront.net/patients/profile",
+          "http://localhost:5000/patients/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const PatientProfile = () => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.put(
-        "https://d1esk4cwpza4ag.cloudfront.net/patients/profileupdate",
+        "http://localhost:5000/patients/profileupdate",
         {
           name: formData.name,
           email: formData.email,
@@ -115,11 +115,10 @@ const PatientProfile = () => {
           >
             {message && (
               <p
-                className={`text-sm text-center font-medium ${
-                  message.includes("success")
+                className={`text-sm text-center font-medium ${message.includes("success")
                     ? "text-green-600"
                     : "text-red-600"
-                }`}
+                  }`}
               >
                 {message}
               </p>
@@ -232,9 +231,8 @@ const PatientProfile = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`bg-[#F26522] w-full text-white py-2 rounded-md hover:bg-orange-600 transition ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`bg-[#F26522] w-full text-white py-2 rounded-md hover:bg-orange-600 transition ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
               >
                 {isLoading ? "Updating..." : "Save Changes"}
               </button>

@@ -61,7 +61,7 @@ const PharmacySignup = () => {
 
     try {
       const response = await fetch(
-        "https://d1esk4cwpza4ag.cloudfront.net/pharmacies/register",
+        "http://localhost:5000/pharmacies/register",
         {
           method: "POST",
           headers: {

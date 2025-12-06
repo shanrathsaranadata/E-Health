@@ -199,7 +199,7 @@ const VideoCall = () => {
     if (videoCallData.appointment?._id) {
       try {
         await axios.post(
-          "https://d1esk4cwpza4ag.cloudfront.net/video-call/end",
+          "http://localhost:5000/video-call/end",
           {
             appointmentId: videoCallData.appointment._id,
           },
@@ -221,7 +221,7 @@ const VideoCall = () => {
   const handleSensorData = async (appointment) => {
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/sensor-data/all`,
+        `http://localhost:5000/sensor-data/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

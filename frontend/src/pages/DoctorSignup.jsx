@@ -84,7 +84,7 @@ const DoctorSignup = () => {
 
     try {
       const response = await fetch(
-        "https://d1esk4cwpza4ag.cloudfront.net/doctors/register",
+        "http://localhost:5000/doctors/register",
         {
           method: "POST",
           headers: {

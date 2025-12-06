@@ -16,7 +16,7 @@ const PatientLogin = () => {
       const patientId = patientId2.toUpperCase();
 
       const response = await fetch(
-        "https://d1esk4cwpza4ag.cloudfront.net/patients/login",
+        "http://localhost:5000/patients/login",
         {
           method: "POST",
           headers: {

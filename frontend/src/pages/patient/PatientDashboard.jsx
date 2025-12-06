@@ -60,7 +60,7 @@ const PatientDashboard = () => {
   const fetchCities = async () => {
     try {
       const response = await axios.get(
-        "https://d1esk4cwpza4ag.cloudfront.net/pharmacy-address"
+        "http://localhost:5000/pharmacy-address"
       );
       const cities = response.data.map((address) => ({
         value: address,
@@ -75,7 +75,7 @@ const PatientDashboard = () => {
   const fetchPharmacies = async (address) => {
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/pharmacies/${address}`
+        `http://localhost:5000/pharmacies/${address}`
       );
       const pharmacies = response.data.map((pharmacy) => ({
         value: pharmacy.pharmacyId,
@@ -93,7 +93,7 @@ const PatientDashboard = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/patient/appointments/${patientId}`,
+        `http://localhost:5000/patient/appointments/${patientId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,7 +121,7 @@ const PatientDashboard = () => {
       if (!prescriptionId) return;
 
       await axios.post(
-        `https://d1esk4cwpza4ag.cloudfront.net/prescription/delivery/${prescriptionId}`,
+        `http://localhost:5000/prescription/delivery/${prescriptionId}`,
         {
           ...deliveryData,
           city: selectedCity?.value,
@@ -147,7 +147,7 @@ const PatientDashboard = () => {
   const handleVideoCall = async (appointment) => {
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+        "http://localhost:5000/video-call/token",
         {
           appointmentId: appointment._id,
         },
@@ -194,7 +194,7 @@ const PatientDashboard = () => {
     if (!incomingCall) return;
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+        "http://localhost:5000/video-call/token",
         {
           appointmentId: incomingCall._id,
         },
@@ -237,11 +237,33 @@ const PatientDashboard = () => {
     }
   };
 
+  const handleDownload = async (fileUrl, fileName = "prescription") => {
+    try {
+      const response = await axios.get(`http://localhost:5000${fileUrl}`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      // Extract file extension or use default
+      const extension = fileUrl.split(".").pop();
+      link.setAttribute("download", `${fileName}.${extension}`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+      // Fallback to basic link
+      window.open(`http://localhost:5000${fileUrl}`, "_blank");
+    }
+  };
+
   const endCall = async () => {
     if (selectedAppointment?._id) {
       try {
         await axios.post(
-          "https://d1esk4cwpza4ag.cloudfront.net/video-call/end",
+          "http://localhost:5000/video-call/end",
           {
             appointmentId: selectedAppointment._id,
           },
@@ -346,7 +368,10 @@ const PatientDashboard = () => {
               </button>
 
               <button
-                onClick={() => setViewPrescription(a.prescription)}
+                onClick={() => setViewPrescription({
+                  description: a.prescription,
+                  fileUrl: a.fileUrl
+                })}
                 className="flex items-center gap-1 border border-[#F26522] text-[#F26522] px-4 py-2 rounded-md hover:bg-[#f265221a] transition"
               >
                 <FileText size={18} />
@@ -372,7 +397,50 @@ const PatientDashboard = () => {
             <h2 className="text-xl font-semibold mb-4 text-[#F26522]">
               Prescription
             </h2>
-            <p className="text-gray-700 mb-4">{viewPrescription}</p>
+            <p className="text-gray-700 mb-4">{viewPrescription.description}</p>
+
+            {viewPrescription.fileUrl && (
+              <div className="mb-4 flex gap-3">
+                <a
+                  href={`http://localhost:5000${viewPrescription.fileUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#F26522] text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
+                >
+                  <FileText size={18} />
+                  View File
+                </a>
+                <button
+                  onClick={() =>
+                    handleDownload(
+                      viewPrescription.fileUrl,
+                      `prescription-${viewPrescription.date}-${viewPrescription.time}`
+                        .replace(/ /g, "_")
+                        .replace(/:/g, "-")
+                    )
+                  }
+                  className="flex-1 flex items-center justify-center gap-2 border border-[#F26522] text-[#F26522] px-4 py-2 rounded-md hover:bg-[#f265221a] transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  Download
+                </button>
+              </div>
+            )}
+
             <div className="flex justify-end">
               <button
                 onClick={() => setViewPrescription(null)}

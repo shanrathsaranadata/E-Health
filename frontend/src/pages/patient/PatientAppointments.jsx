@@ -33,7 +33,7 @@ const PatientAppointments = () => {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "https://d1esk4cwpza4ag.cloudfront.net/doctors"
+        "http://localhost:5000/doctors"
       );
       setDoctorList(response.data);
     } catch (error) {
@@ -44,7 +44,7 @@ const PatientAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/appointments/${patientId}`,
+        `http://localhost:5000/appointments/${patientId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const PatientAppointments = () => {
 
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/appointments",
+        "http://localhost:5000/appointments",
         {
           patientId,
           specialty,
@@ -98,7 +98,7 @@ const PatientAppointments = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://d1esk4cwpza4ag.cloudfront.net/appointments/${id}`,
+        `http://localhost:5000/appointments/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

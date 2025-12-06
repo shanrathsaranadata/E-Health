@@ -25,7 +25,7 @@ const DoctorAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments",
+        "http://localhost:5000/doctors/appointments",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const DoctorAppointments = () => {
   const acceptAppointment = async (id) => {
     try {
       await axios.put(
-        `https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/${id}/accept`,
+        `http://localhost:5000/doctors/appointments/${id}/accept`,
         {},
         {
           headers: {
@@ -69,7 +69,7 @@ const DoctorAppointments = () => {
   const confirmReschedule = async () => {
     try {
       await axios.put(
-        `https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/${selected._id}/reschedule`,
+        `http://localhost:5000/doctors/appointments/${selected._id}/reschedule`,
         {
           date: newDate,
           time: newTime,
@@ -91,7 +91,7 @@ const DoctorAppointments = () => {
   const rejectAppointment = async (id) => {
     try {
       await axios.put(
-        `https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/${id}/reject`,
+        `http://localhost:5000/doctors/appointments/${id}/reject`,
         {},
         {
           headers: {
@@ -195,13 +195,12 @@ const DoctorAppointments = () => {
 
                 {a.status !== "pending" && (
                   <span
-                    className={`text-sm font-medium ${
-                      a.status === "confirmed"
+                    className={`text-sm font-medium ${a.status === "confirmed"
                         ? "text-green-600"
                         : a.status === "rescheduled"
-                        ? "text-yellow-600"
-                        : "text-red-600"
-                    }`}
+                          ? "text-yellow-600"
+                          : "text-red-600"
+                      }`}
                   >
                     ✔ {a.status}
                   </span>

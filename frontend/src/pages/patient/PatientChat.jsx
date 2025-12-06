@@ -32,7 +32,7 @@ const PatientChat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/messages/${appointment._id}`,
+        `http://localhost:5000/messages/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -50,7 +50,7 @@ const PatientChat = () => {
 
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/messages",
+        "http://localhost:5000/messages",
         {
           appointmentId: appointment._id,
           text: input,
@@ -121,8 +121,8 @@ const PatientChat = () => {
             <div
               key={idx}
               className={`max-w-[75%] w-fit px-4 py-2 rounded-lg text-sm ${msg.sender === "patient"
-                  ? "ml-auto bg-[#F26522] text-white"
-                  : "mr-auto bg-gray-200 text-gray-800"
+                ? "ml-auto bg-[#F26522] text-white"
+                : "mr-auto bg-gray-200 text-gray-800"
                 }`}
             >
               {msg.text}

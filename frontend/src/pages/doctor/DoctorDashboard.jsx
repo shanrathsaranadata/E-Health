@@ -12,6 +12,8 @@ const DoctorDashboard = () => {
   const [showSensorModal, setShowSensorModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [prescriptionNote, setPrescriptionNote] = useState("");
+  const [prescriptionFile, setPrescriptionFile] = useState(null);
+  const [existingFileUrl, setExistingFileUrl] = useState(null);
   const [showVideoConfirm, setShowVideoConfirm] = useState(false);
   const [sensorData, setSensorData] = useState(null);
   const [videocallstart, setvideocallstart] = useState(false);
@@ -50,7 +52,7 @@ const DoctorDashboard = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments",
+        "http://localhost:5000/doctors/appointments",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -58,7 +60,7 @@ const DoctorDashboard = () => {
       setAppointments(response.data);
       setLoading(false);
       const response2 = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/sensor-data/all`,
+        `http://localhost:5000/sensor-data/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -78,7 +80,7 @@ const DoctorDashboard = () => {
   const handleVideoCall = async (appointment) => {
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+        "http://localhost:5000/video-call/token",
         {
           appointmentId: appointment._id,
         },
@@ -124,14 +126,38 @@ const DoctorDashboard = () => {
     setShowVideoConfirm(false);
   };
 
+  const handleDownload = async (fileUrl, fileName = "prescription") => {
+    try {
+      const response = await axios.get(`http://localhost:5000${fileUrl}`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      // Extract file extension or use default
+      const extension = fileUrl.split(".").pop();
+      link.setAttribute("download", `${fileName}.${extension}`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+      // Fallback to basic link
+      window.open(`http://localhost:5000${fileUrl}`, "_blank");
+    }
+  };
+
   const handleUpload = async (appointment) => {
     setSelectedAppointment(appointment);
     setPrescriptionNote("");
+    setPrescriptionFile(null);
+    setExistingFileUrl(null);
     setShowUploadModal(true);
 
     try {
       const response = await axios.get(
-        `https://d1esk4cwpza4ag.cloudfront.net/prescriptions/${appointment._id}`,
+        `http://localhost:5000/prescriptions/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -139,6 +165,7 @@ const DoctorDashboard = () => {
 
       if (response.data) {
         setPrescriptionNote(response.data.description);
+        setExistingFileUrl(response.data.fileUrl);
       }
     } catch (err) {
       // If no prescription exists, that's fine - we'll create a new one
@@ -159,10 +186,16 @@ const DoctorDashboard = () => {
   const handlePrescriptionUpload = async () => {
     try {
       let response;
+      const formData = new FormData();
+      formData.append("description", prescriptionNote);
+      if (prescriptionFile) {
+        formData.append("file", prescriptionFile);
+      }
+
       // First try to get existing prescription
       const existingPrescription = await axios
         .get(
-          `https://d1esk4cwpza4ag.cloudfront.net/prescriptions/${selectedAppointment._id}`,
+          `http://localhost:5000/prescriptions/${selectedAppointment._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -171,25 +204,30 @@ const DoctorDashboard = () => {
 
       if (existingPrescription?.data) {
         // Update existing prescription
+        // For PUT, we need to handle FormData correctly.
+        // If file is new, it will replace.
+        // Note: Backend endpoint should treat this as update.
         response = await axios.put(
-          `https://d1esk4cwpza4ag.cloudfront.net/prescriptions/${selectedAppointment._id}`,
+          `http://localhost:5000/prescriptions/${selectedAppointment._id}`,
+          formData,
           {
-            description: prescriptionNote,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data"
+            },
           }
         );
       } else {
         // Create new prescription
+        formData.append("appointmentId", selectedAppointment._id);
         response = await axios.post(
-          "https://d1esk4cwpza4ag.cloudfront.net/prescriptions",
+          "http://localhost:5000/prescriptions",
+          formData,
           {
-            appointmentId: selectedAppointment._id,
-            description: prescriptionNote,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data"
+            },
           }
         );
       }
@@ -209,7 +247,7 @@ const DoctorDashboard = () => {
     if (!incomingCall) return;
     try {
       const response = await axios.post(
-        "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+        "http://localhost:5000/video-call/token",
         {
           appointmentId: incomingCall._id,
         },
@@ -245,7 +283,7 @@ const DoctorDashboard = () => {
     if (selectedAppointment?._id) {
       try {
         await axios.post(
-          "https://d1esk4cwpza4ag.cloudfront.net/video-call/end",
+          "http://localhost:5000/video-call/end",
           {
             appointmentId: selectedAppointment._id,
           },
@@ -358,6 +396,79 @@ const DoctorDashboard = () => {
                   value={prescriptionNote}
                   onChange={(e) => setPrescriptionNote(e.target.value)}
                   className="w-full border px-4 py-2 rounded-md"
+                />
+              </div>
+
+              {existingFileUrl && (
+                <div>
+                  <label className="block text-sm text-gray-600 mb-1">
+                    Current File
+                  </label>
+                  <div className="flex gap-3 mb-2">
+                    <a
+                      href={`http://localhost:5000${existingFileUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-200 transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      View Current
+                    </a>
+                    <button
+                      onClick={() =>
+                        handleDownload(
+                          existingFileUrl,
+                          `prescription`
+                        )
+                      }
+                      className="flex-1 flex items-center justify-center gap-2 border border-[#F26522] text-[#F26522] px-4 py-2 rounded-md hover:bg-[#f265221a] transition"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Download
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">
+                  Upload File (Image/PDF)
+                </label>
+                <input
+                  type="file"
+                  onChange={(e) => setPrescriptionFile(e.target.files[0])}
+                  className="w-full border px-4 py-2 rounded-md"
+                  accept="image/*,.pdf"
                 />
               </div>
 

@@ -35951,11 +35951,11 @@
                         .concat(e.proxyServer, "/ap/?url=")
                         .concat(
                           t +
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         )
                       : "https://".concat(
                         t,
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       ),
                     areaCode: YV(),
                   })),
@@ -36002,11 +36002,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       )
                     : "https://".concat(
                       t,
-                      "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                      "http://localhost:5000/v2/transpond/webrtc?v=2"
                     ),
                   areaCode: YV(),
                 })),
@@ -36156,12 +36156,12 @@
             ? o.map((e) =>
               "https://"
                 .concat(t.proxyServer, "/ap/?url=")
-                .concat(e + "https://d1esk4cwpza4ag.cloudfront.net/v1")
+                .concat(e + "http://localhost:5000/v1")
             )
             : o.map((e) =>
               "https://".concat(
                 e,
-                "https://d1esk4cwpza4ag.cloudfront.net/v1"
+                "http://localhost:5000/v1"
               )
             );
           const s =
@@ -36289,12 +36289,12 @@
             ? i.map((e) =>
               "https://"
                 .concat(t.proxyServer, "/ap/?url=")
-                .concat(e + "https://d1esk4cwpza4ag.cloudfront.net/v1")
+                .concat(e + "http://localhost:5000/v1")
             )
             : i.map((e) =>
               "https://".concat(
                 e,
-                "https://d1esk4cwpza4ag.cloudfront.net/v1"
+                "http://localhost:5000/v1"
               )
             );
           try {
@@ -36362,10 +36362,10 @@
               e.proxyServer
                 ? "https://"
                   .concat(e.proxyServer, "/ap/?url=")
-                  .concat(t + "https://d1esk4cwpza4ag.cloudfront.net/v1")
+                  .concat(t + "http://localhost:5000/v1")
                 : "https://".concat(
                   t,
-                  "https://d1esk4cwpza4ag.cloudfront.net/v1?action=config"
+                  "http://localhost:5000/v1?action=config"
                 )
             ),
             r = i.map((i) =>
@@ -36469,7 +36469,7 @@
             .map((e) => ({
               url: "https://".concat(
                 e,
-                "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                "http://localhost:5000/v2/transpond/webrtc?v=2"
               ),
               areaCode: YV(),
               serviceIds: [GU.CHOOSE_SERVER, GU.CLOUD_PROXY_FALLBACK],
@@ -36629,7 +36629,7 @@
                         ? o(
                           "".concat(
                             t,
-                            "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                            "http://localhost:5000/v2/transpond/webrtc?v=2"
                           ),
                           n,
                           e.proxyServer
@@ -36638,12 +36638,12 @@
                           "fallback" === e.cloudProxyServer
                           ? "https://".concat(
                             t,
-                            "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                            "http://localhost:5000/v2/transpond/webrtc?v=2"
                           )
                           : o(
                             "".concat(
                               t,
-                              "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                              "http://localhost:5000/v2/transpond/webrtc?v=2"
                             ),
                             n
                           )),
@@ -36707,7 +36707,7 @@
                       ? o(
                         "".concat(
                           t,
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         ),
                         n,
                         e.proxyServer
@@ -36716,12 +36716,12 @@
                         "fallback" === e.cloudProxyServer
                         ? "https://".concat(
                           t,
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         )
                         : o(
                           "".concat(
                             t,
-                            "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                            "http://localhost:5000/v2/transpond/webrtc?v=2"
                           ),
                           n
                         )),
@@ -36816,11 +36816,11 @@
                   .concat(e.proxyServer, "/ap/?url=")
                   .concat(
                     t +
-                    "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                    "http://localhost:5000/v1?action=uap"
                   )
                 : "https://".concat(
                   t,
-                  "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                  "http://localhost:5000/v1?action=uap"
                 )
             ),
             r = i.map((i) =>
@@ -36920,11 +36920,11 @@
                     .concat(e.proxyServer, "/ap/?url=")
                     .concat(
                       t +
-                      "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                      "http://localhost:5000/v2/transpond/webrtc?v=2"
                     )
                   : "https://".concat(
                     t,
-                    "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                    "http://localhost:5000/v2/transpond/webrtc?v=2"
                   )
               );
               return o && (await TO(1e3), null !== i)
@@ -47371,7 +47371,7 @@
             const i = CN("WEBCS_DOMAIN").map((e) =>
               "https://".concat(
                 e,
-                "https://d1esk4cwpza4ag.cloudfront.net/v1"
+                "http://localhost:5000/v1"
               )
             ),
               r = await (function (e, t, n, i) {
@@ -52340,11 +52340,11 @@
                                 .concat(t.proxyServer, "/ap/?url=")
                                 .concat(
                                   e +
-                                  "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                                  "http://localhost:5000/v1?action=uap"
                                 )
                               : "https://".concat(
                                 e,
-                                "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                                "http://localhost:5000/v1?action=uap"
                               )
                           );
                         return await oF(r, e, t, n, i);
@@ -59949,7 +59949,7 @@
             const i = CN("WEBCS_DOMAIN").map((e) =>
               "https://".concat(
                 e,
-                "https://d1esk4cwpza4ag.cloudfront.net/v1"
+                "http://localhost:5000/v1"
               )
             ),
               r = await (function (e, t, n, i) {
@@ -79526,7 +79526,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "https://d1esk4cwpza4ag.cloudfront.net/doctors/login",
+                          "http://localhost:5000/doctors/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79661,7 +79661,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "https://d1esk4cwpza4ag.cloudfront.net/patients/login",
+                          "http://localhost:5000/patients/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79795,7 +79795,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "https://d1esk4cwpza4ag.cloudfront.net/pharmacies/login",
+                          "http://localhost:5000/pharmacies/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79980,7 +79980,7 @@
                         if (s === c)
                           try {
                             const t = await fetch(
-                              "https://d1esk4cwpza4ag.cloudfront.net/doctors/register",
+                              "http://localhost:5000/doctors/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80239,7 +80239,7 @@
                         if (c === d)
                           try {
                             const t = await fetch(
-                              "https://d1esk4cwpza4ag.cloudfront.net/patients/register",
+                              "http://localhost:5000/patients/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80487,7 +80487,7 @@
                         if (d === l)
                           try {
                             const t = await fetch(
-                              "https://d1esk4cwpza4ag.cloudfront.net/pharmacies/register",
+                              "http://localhost:5000/pharmacies/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80773,7 +80773,7 @@
               r(e), a(""), c(!0);
               try {
                 const t = await fetch(
-                  "https://d1esk4cwpza4ag.cloudfront.net/api/chat",
+                  "http://localhost:5000/api/chat",
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -83488,7 +83488,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "https://d1esk4cwpza4ag.cloudfront.net/doctors/profile",
+                    "http://localhost:5000/doctors/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -83552,7 +83552,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token")),
                           i = await Qi.put(
-                            "https://d1esk4cwpza4ag.cloudfront.net/doctors/profileupdate",
+                            "http://localhost:5000/doctors/profileupdate",
                             {
                               name: e.name,
                               email: e.email,
@@ -83811,7 +83811,7 @@
           const m = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments",
+                "http://localhost:5000/doctors/appointments",
                 {
                   headers: { Authorization: "Bearer ".concat(_) },
                 }
@@ -83934,7 +83934,7 @@
                                             (async (e) => {
                                               try {
                                                 await Qi.put(
-                                                  "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/".concat(
+                                                  "http://localhost:5000/doctors/appointments/".concat(
                                                     e,
                                                     "/accept"
                                                   ),
@@ -83988,7 +83988,7 @@
                                             (async (e) => {
                                               try {
                                                 await Qi.put(
-                                                  "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/".concat(
+                                                  "http://localhost:5000/doctors/appointments/".concat(
                                                     e,
                                                     "/reject"
                                                   ),
@@ -84111,7 +84111,7 @@
                                   onClick: async () => {
                                     try {
                                       await Qi.put(
-                                        "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments/".concat(
+                                        "http://localhost:5000/doctors/appointments/".concat(
                                           n.id,
                                           "/reschedule"
                                         ),
@@ -84184,7 +84184,7 @@
           const y = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/doctors/appointments",
+                "http://localhost:5000/doctors/appointments",
                 {
                   headers: { Authorization: "Bearer ".concat(T) },
                 }
@@ -84299,7 +84299,7 @@
                                         (async (e) => {
                                           try {
                                             const t = await Qi.post(
-                                              "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+                                              "http://localhost:5000/video-call/token",
                                               { appointmentId: e._id },
                                               {
                                                 headers: {
@@ -84357,7 +84357,7 @@
                                           l(e), h(""), a(!0);
                                           try {
                                             const t = await Qi.get(
-                                              "https://d1esk4cwpza4ag.cloudfront.net/prescriptions/".concat(
+                                              "http://localhost:5000/prescriptions/".concat(
                                                 e._id
                                               ),
                                               {
@@ -84386,7 +84386,7 @@
                                         (async (e) => {
                                           try {
                                             const t = await Qi.get(
-                                              "https://d1esk4cwpza4ag.cloudfront.net/sensor-data/".concat(
+                                              "http://localhost:5000/sensor-data/".concat(
                                                 e.patientId
                                               ),
                                               {
@@ -84468,7 +84468,7 @@
                                       try {
                                         let e;
                                         const t = await Qi.get(
-                                          "https://d1esk4cwpza4ag.cloudfront.net/prescriptions/".concat(
+                                          "http://localhost:5000/prescriptions/".concat(
                                             d._id
                                           ),
                                           {
@@ -84482,7 +84482,7 @@
                                         (e =
                                           null !== t && void 0 !== t && t.data
                                             ? await Qi.put(
-                                              "https://d1esk4cwpza4ag.cloudfront.net/prescriptions/".concat(
+                                              "http://localhost:5000/prescriptions/".concat(
                                                 d._id
                                               ),
                                               { description: u },
@@ -84494,7 +84494,7 @@
                                               }
                                             )
                                             : await Qi.post(
-                                              "https://d1esk4cwpza4ag.cloudfront.net/prescriptions",
+                                              "http://localhost:5000/prescriptions",
                                               {
                                                 appointmentId: d._id,
                                                 description: u,
@@ -84775,7 +84775,7 @@
           const p = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/messages/".concat(
+                "http://localhost:5000/messages/".concat(
                   h._id
                 ),
                 {
@@ -84791,7 +84791,7 @@
               if (a.trim())
                 try {
                   const e = await Qi.post(
-                    "https://d1esk4cwpza4ag.cloudfront.net/messages",
+                    "http://localhost:5000/messages",
                     { appointmentId: h._id, text: a },
                     { headers: { Authorization: "Bearer ".concat(u) } }
                   );
@@ -85045,7 +85045,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "https://d1esk4cwpza4ag.cloudfront.net/patients/profile",
+                    "http://localhost:5000/patients/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -85104,7 +85104,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token"));
                         await Qi.put(
-                          "https://d1esk4cwpza4ag.cloudfront.net/patients/profileupdate",
+                          "http://localhost:5000/patients/profileupdate",
                           {
                             name: e.name,
                             email: e.email,
@@ -85357,7 +85357,7 @@
           const h = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/doctors"
+                "http://localhost:5000/doctors"
               );
               s(e.data);
             } catch (e) {
@@ -85367,7 +85367,7 @@
             p = async () => {
               try {
                 const e = await Qi.get(
-                  "https://d1esk4cwpza4ag.cloudfront.net/appointments/".concat(
+                  "http://localhost:5000/appointments/".concat(
                     l
                   ),
                   {
@@ -85472,7 +85472,7 @@
                             (async (e) => {
                               try {
                                 await Qi.delete(
-                                  "https://d1esk4cwpza4ag.cloudfront.net/appointments/".concat(
+                                  "http://localhost:5000/appointments/".concat(
                                     e
                                   ),
                                   {
@@ -85693,7 +85693,7 @@
                                 if (e && t && i && r && a && s)
                                   try {
                                     const c = await Qi.post(
-                                      "https://d1esk4cwpza4ag.cloudfront.net/appointments",
+                                      "http://localhost:5000/appointments",
                                       {
                                         patientId: l,
                                         specialty: e,
@@ -91346,7 +91346,7 @@
           try {
             const e = (
               await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/pharmacy-address"
+                "http://localhost:5000/pharmacy-address"
               )
             ).data.map((e) => ({ value: e, label: e }));
             d(e);
@@ -91357,7 +91357,7 @@
           O = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/patient/appointments/".concat(
+                "http://localhost:5000/patient/appointments/".concat(
                   I
                 ),
                 {
@@ -91477,7 +91477,7 @@
                               (async (e) => {
                                 try {
                                   const t = await Qi.post(
-                                    "https://d1esk4cwpza4ag.cloudfront.net/video-call/token",
+                                    "http://localhost:5000/video-call/token",
                                     { appointmentId: e._id },
                                     {
                                       headers: {
@@ -91620,7 +91620,7 @@
                                   try {
                                     const t = (
                                       await Qi.get(
-                                        "https://d1esk4cwpza4ag.cloudfront.net/pharmacies/".concat(
+                                        "http://localhost:5000/pharmacies/".concat(
                                           e
                                         )
                                       )
@@ -91691,7 +91691,7 @@
                                   : i.prescriptionId;
                               if ((console.log(r), !r)) return;
                               await Qi.post(
-                                "https://d1esk4cwpza4ag.cloudfront.net/prescription/delivery/".concat(
+                                "http://localhost:5000/prescription/delivery/".concat(
                                   r
                                 ),
                                 Me(
@@ -91814,7 +91814,7 @@
           const p = async () => {
             try {
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/messages/".concat(
+                "http://localhost:5000/messages/".concat(
                   h._id
                 ),
                 {
@@ -91830,7 +91830,7 @@
               if (a.trim())
                 try {
                   const e = await Qi.post(
-                    "https://d1esk4cwpza4ag.cloudfront.net/messages",
+                    "http://localhost:5000/messages",
                     { appointmentId: h._id, text: a },
                     { headers: { Authorization: "Bearer ".concat(u) } }
                   );
@@ -92068,7 +92068,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "https://d1esk4cwpza4ag.cloudfront.net/pharmacy/profile",
+                    "http://localhost:5000/pharmacy/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -92133,7 +92133,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token")),
                           i = await Qi.put(
-                            "https://d1esk4cwpza4ag.cloudfront.net/pharmacy/profileupdate",
+                            "http://localhost:5000/pharmacy/profileupdate",
                             {
                               pharmacyName: e.pharmacyName,
                               email: e.email,
@@ -92389,7 +92389,7 @@
             try {
               a(!0);
               const e = await Qi.get(
-                "https://d1esk4cwpza4ag.cloudfront.net/pharmacy/prescriptions",
+                "http://localhost:5000/pharmacy/prescriptions",
                 {
                   headers: { Authorization: "Bearer ".concat(d) },
                 }
@@ -92405,7 +92405,7 @@
             u = async (e, n) => {
               try {
                 await Qi.put(
-                  "https://d1esk4cwpza4ag.cloudfront.net/pharmacy/prescriptions/".concat(
+                  "http://localhost:5000/pharmacy/prescriptions/".concat(
                     e,
                     "/status"
                   ),
@@ -124183,11 +124183,11 @@
                         .concat(e.proxyServer, "/ap/?url=")
                         .concat(
                           t +
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         )
                       : "https://".concat(
                         t,
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       ),
                     areaCode: qH(),
                   })),
@@ -124234,11 +124234,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       )
                     : "https://".concat(
                       t,
-                      "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                      "http://localhost:5000/v2/transpond/webrtc?v=2"
                     ),
                   areaCode: qH(),
                 })),
@@ -124384,10 +124384,10 @@
           ? o.map((e) =>
             "https://"
               .concat(t.proxyServer, "/ap/?url=")
-              .concat(e + "https://d1esk4cwpza4ag.cloudfront.net/v1")
+              .concat(e + "http://localhost:5000/v1")
           )
           : o.map((e) =>
-            "https://".concat(e, "https://d1esk4cwpza4ag.cloudfront.net/v1")
+            "https://".concat(e, "http://localhost:5000/v1")
           );
         let s =
           null === r || void 0 === r
@@ -124516,10 +124516,10 @@
           ? i.map((e) =>
             "https://"
               .concat(t.proxyServer, "/ap/?url=")
-              .concat(e + "https://d1esk4cwpza4ag.cloudfront.net/v1")
+              .concat(e + "http://localhost:5000/v1")
           )
           : i.map((e) =>
-            "https://".concat(e, "https://d1esk4cwpza4ag.cloudfront.net/v1")
+            "https://".concat(e, "http://localhost:5000/v1")
           );
         try {
           return await pK({
@@ -124579,7 +124579,7 @@
           .map((e) => ({
             url: "https://".concat(
               e,
-              "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+              "http://localhost:5000/v2/transpond/webrtc?v=2"
             ),
             areaCode: qH(),
             serviceIds: [AU.CHOOSE_SERVER, AU.CLOUD_PROXY_FALLBACK],
@@ -124737,7 +124737,7 @@
                       ? c(
                         "".concat(
                           t,
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         ),
                         n,
                         e.proxyServer
@@ -124746,12 +124746,12 @@
                         "fallback" === e.cloudProxyServer
                         ? "https://".concat(
                           t,
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         )
                         : c(
                           "".concat(
                             t,
-                            "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                            "http://localhost:5000/v2/transpond/webrtc?v=2"
                           ),
                           n
                         )),
@@ -124815,7 +124815,7 @@
                     ? c(
                       "".concat(
                         t,
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       ),
                       n,
                       e.proxyServer
@@ -124824,12 +124824,12 @@
                       "fallback" === e.cloudProxyServer
                       ? "https://".concat(
                         t,
-                        "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                        "http://localhost:5000/v2/transpond/webrtc?v=2"
                       )
                       : c(
                         "".concat(
                           t,
-                          "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                          "http://localhost:5000/v2/transpond/webrtc?v=2"
                         ),
                         n
                       )),
@@ -124923,11 +124923,11 @@
                     .concat(e.proxyServer, "/ap/?url=")
                     .concat(
                       t +
-                      "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                      "http://localhost:5000/v2/transpond/webrtc?v=2"
                     )
                   : "https://".concat(
                     t,
-                    "https://d1esk4cwpza4ag.cloudfront.net/v2/transpond/webrtc?v=2"
+                    "http://localhost:5000/v2/transpond/webrtc?v=2"
                   )
             );
             return o && (await aL(1e3), null !== i)
@@ -125155,11 +125155,11 @@
                     ? "https://"
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
-                        t + "https://d1esk4cwpza4ag.cloudfront.net/v1"
+                        t + "http://localhost:5000/v1"
                       )
                     : "https://".concat(
                       t,
-                      "https://d1esk4cwpza4ag.cloudfront.net/v1?action=config"
+                      "http://localhost:5000/v1?action=config"
                     )
                 )
                 .map((i) =>
@@ -141637,7 +141637,7 @@
         }
         async requestAP(e, t, n) {
           let i = xL("WEBCS_DOMAIN").map((e) =>
-            "https://".concat(e, "https://d1esk4cwpza4ag.cloudfront.net/v1")
+            "https://".concat(e, "http://localhost:5000/v1")
           ),
             r = await (function (e, t, n, i) {
               let {
@@ -145965,11 +145965,11 @@
                                 .concat(t.proxyServer, "/ap/?url=")
                                 .concat(
                                   e +
-                                  "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                                  "http://localhost:5000/v1?action=uap"
                                 )
                               : "https://".concat(
                                 e,
-                                "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                                "http://localhost:5000/v1?action=uap"
                               )
                           );
                         return await (function (e, t, n, i, r) {
@@ -151743,11 +151743,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                        "http://localhost:5000/v1?action=uap"
                       )
                     : "https://".concat(
                       t,
-                      "https://d1esk4cwpza4ag.cloudfront.net/v1?action=uap"
+                      "http://localhost:5000/v1?action=uap"
                     )
                 )
                 .map((i) =>
@@ -153326,7 +153326,7 @@
         }
         async requestAP(e, t, n) {
           let i = xL("WEBCS_DOMAIN").map((e) =>
-            "https://".concat(e, "https://d1esk4cwpza4ag.cloudfront.net/v1")
+            "https://".concat(e, "http://localhost:5000/v1")
           ),
             r = await (function (e, t, n, i) {
               let {

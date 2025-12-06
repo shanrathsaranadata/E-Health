@@ -25,7 +25,7 @@ const ChatBot = () => {
 
     try {
       const response = await fetch(
-        "https://d1esk4cwpza4ag.cloudfront.net/api/chat",
+        "http://localhost:5000/api/chat",
         {
           method: "POST",
           headers: {
@@ -76,9 +76,8 @@ const ChatBot = () => {
 
       {/* Chat Panel */}
       <div
-        className={`flex flex-col fixed top-0 right-0 h-full w-full sm:w-[350px] bg-white border-l z-50 shadow-xl transform transition-transform duration-300 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`flex flex-col fixed top-0 right-0 h-full w-full sm:w-[350px] bg-white border-l z-50 shadow-xl transform transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-[#F26522] text-white">
@@ -93,11 +92,10 @@ const ChatBot = () => {
           {chatLog.map((msg, idx) => (
             <div
               key={idx}
-              className={`text-sm px-3 py-2 rounded-md max-w-[80%] w-fit ${
-                msg.type === "user"
+              className={`text-sm px-3 py-2 rounded-md max-w-[80%] w-fit ${msg.type === "user"
                   ? "bg-[#F26522] text-white self-end ml-auto"
                   : "bg-gray-100 text-gray-800"
-              }`}
+                }`}
             >
               {msg.text}
             </div>
@@ -118,11 +116,10 @@ const ChatBot = () => {
           <button
             onClick={handleSend}
             disabled={isLoading}
-            className={`bg-[#F26522] text-white px-3 py-2 rounded-md transition ${
-              isLoading
+            className={`bg-[#F26522] text-white px-3 py-2 rounded-md transition ${isLoading
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-orange-600"
-            }`}
+              }`}
           >
             <SendHorizontal size={16} />
           </button>
