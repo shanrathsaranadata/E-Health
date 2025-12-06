@@ -10,12 +10,12 @@
       {
         "source": "**",
         "destination": "/index.html"
-      },
-      {
-        "source": "http://localhost:5000/",
-        "destination": "https://d1esk4cwpza4ag.cloudfront.net"
       }
     ],
     "errorPage": "/notFound.html"
+  },
+  "functions": {
+    "source": "backend",
+    "runtime": "nodejs20"
   }
 }

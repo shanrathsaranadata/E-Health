@@ -13,13 +13,13 @@ goto :frontend
 
 :backend
 echo 🔧 Deploying backend only...
-firebase deploy --only apphosting
+firebase deploy --only functions
 exit /b %errorlevel%
 
 :full
 echo 🔧 Deploying both frontend and backend...
 echo 🔥 Deploying backend to Firebase App Hosting...
-firebase deploy --only apphosting
+firebase deploy --only functions
 if %errorlevel% neq 0 (
     echo ❌ Backend deployment failed!
     echo Please check the setup-secrets.md file for configuration instructions.
