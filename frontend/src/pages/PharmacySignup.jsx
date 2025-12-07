@@ -61,7 +61,7 @@ const PharmacySignup = () => {
 
     try {
       const response = await fetch(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/register",
+        "https://api-budixrq36q-uc.a.run.app/pharmacies/register",
         {
           method: "POST",
           headers: {

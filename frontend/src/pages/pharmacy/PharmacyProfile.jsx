@@ -22,7 +22,7 @@ const PharmacyProfile = () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
         const response = await axios.get(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/profile",
+          "https://api-budixrq36q-uc.a.run.app/pharmacy/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ const PharmacyProfile = () => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.put(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/profileupdate",
+        "https://api-budixrq36q-uc.a.run.app/pharmacy/profileupdate",
         {
           pharmacyName: formData.pharmacyName,
           email: formData.email,

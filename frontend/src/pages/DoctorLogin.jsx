@@ -15,7 +15,7 @@ const DoctorLogin = () => {
     try {
       const doctorId = doctorId2.toUpperCase();
       const response = await fetch(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/login",
+        "https://api-budixrq36q-uc.a.run.app/doctors/login",
         {
           method: "POST",
           headers: {

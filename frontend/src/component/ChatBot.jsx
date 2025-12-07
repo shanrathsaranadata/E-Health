@@ -25,7 +25,7 @@ const ChatBot = () => {
 
     try {
       const response = await fetch(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/api/chat",
+        "https://api-budixrq36q-uc.a.run.app/api/chat",
         {
           method: "POST",
           headers: {

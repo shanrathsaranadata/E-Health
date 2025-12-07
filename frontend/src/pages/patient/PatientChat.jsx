@@ -32,7 +32,7 @@ const PatientChat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/messages/${appointment._id}`,
+        `https://api-budixrq36q-uc.a.run.app/messages/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -50,7 +50,7 @@ const PatientChat = () => {
 
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages",
+        "https://api-budixrq36q-uc.a.run.app/messages",
         {
           appointmentId: appointment._id,
           text: input,

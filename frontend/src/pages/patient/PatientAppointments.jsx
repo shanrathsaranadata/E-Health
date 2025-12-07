@@ -33,7 +33,7 @@ const PatientAppointments = () => {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors"
+        "https://api-budixrq36q-uc.a.run.app/doctors"
       );
       setDoctorList(response.data);
     } catch (error) {
@@ -44,7 +44,7 @@ const PatientAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments/${patientId}`,
+        `https://api-budixrq36q-uc.a.run.app/appointments/${patientId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const PatientAppointments = () => {
 
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments",
+        "https://api-budixrq36q-uc.a.run.app/appointments",
         {
           patientId,
           specialty,
@@ -98,7 +98,7 @@ const PatientAppointments = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments/${id}`,
+        `https://api-budixrq36q-uc.a.run.app/appointments/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

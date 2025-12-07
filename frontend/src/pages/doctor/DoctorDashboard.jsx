@@ -25,7 +25,7 @@ const DoctorDashboard = () => {
 
   useEffect(() => {
     fetchAppointments();
-    const intervalId = setInterval(fetchAppointments, 1000);
+    const intervalId = setInterval(fetchAppointments, 100000);
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
@@ -52,7 +52,7 @@ const DoctorDashboard = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments",
+        "https://api-budixrq36q-uc.a.run.app/doctors/appointments",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -60,7 +60,7 @@ const DoctorDashboard = () => {
       setAppointments(response.data);
       setLoading(false);
       const response2 = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/all`,
+        `https://api-budixrq36q-uc.a.run.app/sensor-data/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -80,7 +80,7 @@ const DoctorDashboard = () => {
   const handleVideoCall = async (appointment) => {
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
+        "https://api-budixrq36q-uc.a.run.app/video-call/token",
         {
           appointmentId: appointment._id,
         },
@@ -126,9 +126,16 @@ const DoctorDashboard = () => {
     setShowVideoConfirm(false);
   };
 
+  const getFullUrl = (url) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `https://api-budixrq36q-uc.a.run.app${url}`;
+  };
+
   const handleDownload = async (fileUrl, fileName = "prescription") => {
     try {
-      const response = await axios.get(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, {
+      const fullUrl = getFullUrl(fileUrl);
+      const response = await axios.get(fullUrl, {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -144,7 +151,7 @@ const DoctorDashboard = () => {
     } catch (err) {
       console.error("Download failed:", err);
       // Fallback to basic link
-      window.open(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, "_blank");
+      window.open(getFullUrl(fileUrl), "_blank");
     }
   };
 
@@ -157,7 +164,7 @@ const DoctorDashboard = () => {
 
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${appointment._id}`,
+        `https://api-budixrq36q-uc.a.run.app/prescriptions/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -195,7 +202,7 @@ const DoctorDashboard = () => {
       // First try to get existing prescription
       const existingPrescription = await axios
         .get(
-          `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${selectedAppointment._id}`,
+          `https://api-budixrq36q-uc.a.run.app/prescriptions/${selectedAppointment._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -208,7 +215,7 @@ const DoctorDashboard = () => {
         // If file is new, it will replace.
         // Note: Backend endpoint should treat this as update.
         response = await axios.put(
-          `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${selectedAppointment._id}`,
+          `https://api-budixrq36q-uc.a.run.app/prescriptions/${selectedAppointment._id}`,
           formData,
           {
             headers: {
@@ -221,7 +228,7 @@ const DoctorDashboard = () => {
         // Create new prescription
         formData.append("appointmentId", selectedAppointment._id);
         response = await axios.post(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions",
+          "https://api-budixrq36q-uc.a.run.app/prescriptions",
           formData,
           {
             headers: {
@@ -239,6 +246,12 @@ const DoctorDashboard = () => {
       }
     } catch (err) {
       console.error("Error uploading prescription:", err);
+      if (err.response && err.response.data) {
+        console.error("Server Error Details:", err.response.data);
+        alert(`Failed to upload prescription: ${err.response.data.message || err.message}`);
+      } else {
+        alert("Failed to upload prescription. Check console for details.");
+      }
       setError("Failed to upload prescription");
     }
   };
@@ -247,7 +260,7 @@ const DoctorDashboard = () => {
     if (!incomingCall) return;
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
+        "https://api-budixrq36q-uc.a.run.app/video-call/token",
         {
           appointmentId: incomingCall._id,
         },
@@ -283,7 +296,7 @@ const DoctorDashboard = () => {
     if (selectedAppointment?._id) {
       try {
         await axios.post(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/end",
+          "https://api-budixrq36q-uc.a.run.app/video-call/end",
           {
             appointmentId: selectedAppointment._id,
           },
@@ -404,9 +417,27 @@ const DoctorDashboard = () => {
                   <label className="block text-sm text-gray-600 mb-1">
                     Current File
                   </label>
+
+                  {/* Image Preview */}
+                  {/* Basic check for image extension or assume image if no extension for simplicity, 
+                      since we mostly upload images? Better to check extension. */}
+                  <div className="mb-2">
+                    <img
+                      src={getFullUrl(existingFileUrl)}
+                      alt="Prescription Preview"
+                      className="w-full h-48 object-contain border rounded bg-gray-50"
+                      onError={(e) => { e.target.style.display = 'none' }}
+                    />
+                  </div>
+
+                  {/* URL Text */}
+                  <div className="mb-2 bg-gray-100 p-2 rounded text-xs break-all text-gray-500 font-mono">
+                    {existingFileUrl}
+                  </div>
+
                   <div className="flex gap-3 mb-2">
                     <a
-                      href={`https://us-central1-e-health-7d458.cloudfunctions.net/api${existingFileUrl}`}
+                      href={getFullUrl(existingFileUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-200 transition"

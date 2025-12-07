@@ -60,7 +60,7 @@ const PatientDashboard = () => {
   const fetchCities = async () => {
     try {
       const response = await axios.get(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy-address"
+        "https://api-budixrq36q-uc.a.run.app/pharmacy-address"
       );
       const cities = response.data.map((address) => ({
         value: address,
@@ -75,7 +75,7 @@ const PatientDashboard = () => {
   const fetchPharmacies = async (address) => {
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/${address}`
+        `https://api-budixrq36q-uc.a.run.app/pharmacies/${address}`
       );
       const pharmacies = response.data.map((pharmacy) => ({
         value: pharmacy.pharmacyId,
@@ -93,7 +93,7 @@ const PatientDashboard = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/patient/appointments/${patientId}`,
+        `https://api-budixrq36q-uc.a.run.app/patient/appointments/${patientId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,7 +121,7 @@ const PatientDashboard = () => {
       if (!prescriptionId) return;
 
       await axios.post(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescription/delivery/${prescriptionId}`,
+        `https://api-budixrq36q-uc.a.run.app/prescription/delivery/${prescriptionId}`,
         {
           ...deliveryData,
           city: selectedCity?.value,
@@ -147,7 +147,7 @@ const PatientDashboard = () => {
   const handleVideoCall = async (appointment) => {
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
+        "https://api-budixrq36q-uc.a.run.app/video-call/token",
         {
           appointmentId: appointment._id,
         },
@@ -194,7 +194,7 @@ const PatientDashboard = () => {
     if (!incomingCall) return;
     try {
       const response = await axios.post(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
+        "https://api-budixrq36q-uc.a.run.app/video-call/token",
         {
           appointmentId: incomingCall._id,
         },
@@ -237,9 +237,16 @@ const PatientDashboard = () => {
     }
   };
 
+  const getFullUrl = (url) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `https://api-budixrq36q-uc.a.run.app${url}`;
+  };
+
   const handleDownload = async (fileUrl, fileName = "prescription") => {
     try {
-      const response = await axios.get(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, {
+      const fullUrl = getFullUrl(fileUrl);
+      const response = await axios.get(fullUrl, {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -255,7 +262,7 @@ const PatientDashboard = () => {
     } catch (err) {
       console.error("Download failed:", err);
       // Fallback to basic link
-      window.open(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, "_blank");
+      window.open(getFullUrl(fileUrl), "_blank");
     }
   };
 
@@ -263,7 +270,7 @@ const PatientDashboard = () => {
     if (selectedAppointment?._id) {
       try {
         await axios.post(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/end",
+          "https://api-budixrq36q-uc.a.run.app/video-call/end",
           {
             appointmentId: selectedAppointment._id,
           },
@@ -400,44 +407,59 @@ const PatientDashboard = () => {
             <p className="text-gray-700 mb-4">{viewPrescription.description}</p>
 
             {viewPrescription.fileUrl && (
-              <div className="mb-4 flex gap-3">
-                <a
-                  href={`https://us-central1-e-health-7d458.cloudfunctions.net/api${viewPrescription.fileUrl}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#F26522] text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
-                >
-                  <FileText size={18} />
-                  View File
-                </a>
-                <button
-                  onClick={() =>
-                    handleDownload(
-                      viewPrescription.fileUrl,
-                      `prescription-${viewPrescription.date}-${viewPrescription.time}`
-                        .replace(/ /g, "_")
-                        .replace(/:/g, "-")
-                    )
-                  }
-                  className="flex-1 flex items-center justify-center gap-2 border border-[#F26522] text-[#F26522] px-4 py-2 rounded-md hover:bg-[#f265221a] transition"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              <div>
+                {/* Image Preview */}
+                <div className="mb-2">
+                  <img
+                    src={getFullUrl(viewPrescription.fileUrl)}
+                    alt="Prescription Preview"
+                    className="w-full h-48 object-contain border rounded bg-gray-50"
+                    onError={(e) => { e.target.style.display = 'none' }}
+                  />
+                </div>
+
+                {/* URL Text */}
+                <div className="mb-2 bg-gray-100 p-2 rounded text-xs break-all text-gray-500 font-mono">
+                  {viewPrescription.fileUrl}
+                </div>
+
+                <div className="mb-4 flex gap-3">
+                  <a
+                    href={getFullUrl(viewPrescription.fileUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 bg-[#F26522] text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"
                   >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  Download
-                </button>
+                    <FileText size={18} />
+                    View File
+                  </a>
+                  <button
+                    onClick={() =>
+                      handleDownload(
+                        viewPrescription.fileUrl,
+                        `prescription`
+                      )
+                    }
+                    className="flex-1 flex items-center justify-center gap-2 border border-[#F26522] text-[#F26522] px-4 py-2 rounded-md hover:bg-[#f265221a] transition"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download
+                  </button>
+                </div>
               </div>
             )}
 

@@ -185,7 +185,7 @@ const VideoCall = () => {
   const fetchsensordata = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/all`,
+        `https://api-budixrq36q-uc.a.run.app/sensor-data/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -223,7 +223,7 @@ const VideoCall = () => {
     if (videoCallData.appointment?._id) {
       try {
         await axios.post(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/end",
+          "https://api-budixrq36q-uc.a.run.app/video-call/end",
           {
             appointmentId: videoCallData.appointment._id,
           },

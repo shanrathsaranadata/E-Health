@@ -25,7 +25,7 @@ const DoctorAppointments = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments",
+        "https://api-budixrq36q-uc.a.run.app/doctors/appointments",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const DoctorAppointments = () => {
   const acceptAppointment = async (id) => {
     try {
       await axios.put(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/${id}/accept`,
+        `https://api-budixrq36q-uc.a.run.app/doctors/appointments/${id}/accept`,
         {},
         {
           headers: {
@@ -69,7 +69,7 @@ const DoctorAppointments = () => {
   const confirmReschedule = async () => {
     try {
       await axios.put(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/${selected._id}/reschedule`,
+        `https://api-budixrq36q-uc.a.run.app/doctors/appointments/${selected._id}/reschedule`,
         {
           date: newDate,
           time: newTime,
@@ -91,7 +91,7 @@ const DoctorAppointments = () => {
   const rejectAppointment = async (id) => {
     try {
       await axios.put(
-        `https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/${id}/reject`,
+        `https://api-budixrq36q-uc.a.run.app/doctors/appointments/${id}/reject`,
         {},
         {
           headers: {

@@ -21,7 +21,7 @@ const DoctorProfile = () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
         const response = await axios.get(
-          "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/profile",
+          "https://api-budixrq36q-uc.a.run.app/doctors/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const DoctorProfile = () => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.put(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/profileupdate",
+        "https://api-budixrq36q-uc.a.run.app/doctors/profileupdate",
         {
           name: formData.name,
           email: formData.email,

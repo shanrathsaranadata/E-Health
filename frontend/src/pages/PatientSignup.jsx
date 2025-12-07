@@ -51,7 +51,7 @@ const PatientSignup = () => {
 
     try {
       const response = await fetch(
-        "https://us-central1-e-health-7d458.cloudfunctions.net/api/patients/register",
+        "https://api-budixrq36q-uc.a.run.app/patients/register",
         {
           method: "POST",
           headers: {

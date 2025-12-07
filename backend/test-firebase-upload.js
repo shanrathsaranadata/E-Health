@@ -24,7 +24,7 @@ async function testUpload() {
 
     // Create test file
     const testContent = "Test prescription file - " + new Date().toISOString();
-    const testFilename = `test_${Date.now()}.txt`;
+    const testFilename = `uploads/test_${Date.now()}.txt`;
     const testPath = path.join(__dirname, testFilename);
     fs.writeFileSync(testPath, testContent);
     console.log("✓ Test file created:", testFilename);

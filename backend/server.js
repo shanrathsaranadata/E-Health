@@ -11,53 +11,71 @@ const path = require("path");
 const fs = require("fs");
 
 const admin = require("firebase-admin");
-// Initialize Firebase Admin
-// Uses GOOGLE_APPLICATION_CREDENTIALS or default service account
-// Ensure you have enabled "Authentication" and "Storage" in Firebase Console
+// Initialize Firebase Admin with Service Account
 try {
+  const serviceAccount = require(process.env.GOOGLE_APPLICATION_CREDENTIALS || "./e-health-7d458-firebase-adminsdk-fbsvc-3e7ca952b3.json");
   admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
+    credential: admin.credential.cert(serviceAccount),
     storageBucket: process.env.STORAGE_BUCKET || "e-health-7d458.appspot.com",
   });
   console.log("Firebase Admin Initialized");
 } catch (error) {
   console.error("Firebase Admin Initialization Error:", error);
 }
-// Ensure uploads directory exists (Legacy - keeping for safety but not used for new uploads)
-const uploadDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
+
 // Set up multer for memory storage (for Firebase Upload)
+// We use memory storage to avoid writing to the file system (which is read-only in Cloud Functions except /tmp)
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  }
+});
+
 // Helper function to upload to Firebase Storage
 async function uploadToFirebase(file) {
   if (!file) return null;
   const bucket = admin.storage().bucket();
-  const filename = `uploads/${Date.now()}_${path.basename(file.originalname)}`;
+  const sanitizedName = path.basename(file.originalname).replace(/[^a-zA-Z0-9.-]/g, "_");
+  const filename = `uploads/${Date.now()}_${sanitizedName}`;
   const fileUpload = bucket.file(filename);
+
   return new Promise((resolve, reject) => {
     const blobStream = fileUpload.createWriteStream({
       metadata: {
         contentType: file.mimetype,
       },
-      public: true, // Make the file public
+      public: true,
     });
     blobStream.on("error", (error) => {
       console.error("Blob stream error:", error);
       reject(error);
     });
     blobStream.on("finish", () => {
-      // publicUrl format: https://storage.googleapis.com/BUCKET_NAME/FILE_NAME
-      // Or: https://firebasestorage.googleapis.com/v0/b/BUCKET_NAME/o/FILE_NAME?alt=media
-      // Using the public Google Storage URL for simplicity with 'public: true'
       const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
       resolve(publicUrl);
     });
     blobStream.end(file.buffer);
   });
 }
+
+// Middleware to fix Multer "Unexpected end of form" in Firebase Functions
+// Restores the stream from req.rawBody if it exists
+const { Readable } = require('stream');
+const multerFirebaseFix = (req, res, next) => {
+  if (req.rawBody && req.headers['content-type'] && req.headers['content-type'].startsWith('multipart/form-data')) {
+    const stream = new Readable();
+    stream.push(req.rawBody);
+    stream.push(null);
+
+    // Hack: Override stream methods to make busboy read from our new stream
+    req.pipe = stream.pipe.bind(stream);
+    req.unpipe = stream.unpipe.bind(stream);
+    req.on = stream.on.bind(stream);
+  }
+  next();
+};
 
 const app = express();
 
@@ -71,6 +89,7 @@ const openai = new OpenAI({
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(multerFirebaseFix); // Apply the fix for file uploads
 app.use("/uploads", express.static("uploads"));
 
 // MongoDB Connection
@@ -979,8 +998,11 @@ app.post("/prescriptions", auth, upload.single("file"), async (req, res) => {
       try {
         fileUrl = await uploadToFirebase(req.file);
       } catch (error) {
-        console.error("Upload failed", error);
-        return res.status(500).json({ message: "Error uploading file to storage" });
+        console.error("Upload failed details:", error);
+        return res.status(500).json({
+          message: "Error uploading file to storage",
+          error: error.message
+        });
       }
     }
 
@@ -1008,7 +1030,10 @@ app.post("/prescriptions", auth, upload.single("file"), async (req, res) => {
     res.status(201).json(prescription);
   } catch (error) {
     console.error("Error uploading prescription:", error);
-    res.status(500).json({ message: "Error uploading prescription" });
+    res.status(500).json({
+      message: "Error uploading prescription",
+      error: error.message
+    });
   }
 });
 
@@ -1236,6 +1261,7 @@ app.get("/pharmacy-address", async (req, res) => {
 
 // Update Prescription
 // Update Prescription
+// Update Prescription
 app.put("/prescriptions/:appointmentId", auth, upload.single("file"), async (req, res) => {
   try {
     const { description } = req.body;
@@ -1264,10 +1290,14 @@ app.put("/prescriptions/:appointmentId", auth, upload.single("file"), async (req
 
     if (req.file) {
       try {
-        fileUrl = await uploadToFirebase(req.file);
+        const fileUrl = await uploadToFirebase(req.file);
+        prescription.fileUrl = fileUrl;
       } catch (error) {
-        console.error("Upload failed", error);
-        return res.status(500).json({ message: "Error uploading file to storage" });
+        console.error("Upload failed details:", error);
+        return res.status(500).json({
+          message: "Error uploading file to storage",
+          error: error.message
+        });
       }
     }
 
@@ -1275,7 +1305,10 @@ app.put("/prescriptions/:appointmentId", auth, upload.single("file"), async (req
     res.json(prescription);
   } catch (error) {
     console.error("Error updating prescription:", error);
-    res.status(500).json({ message: "Error updating prescription" });
+    res.status(500).json({
+      message: "Error updating prescription",
+      error: error.message
+    });
   }
 });
 
@@ -1410,13 +1443,61 @@ app.post("/video-call/end", auth, async (req, res) => {
   }
 });
 
+// Proxy Download Route to force file download
+app.get("/download", async (req, res) => {
+  try {
+    const { fileUrl, fileName } = req.query;
+    if (!fileUrl) return res.status(400).send("Missing fileUrl");
+
+    // Extract file path from URL
+    // Format: https://storage.googleapis.com/<bucket>/<path>
+    const bucket = admin.storage().bucket();
+    const bucketUrlPrefix = `https://storage.googleapis.com/${bucket.name}/`;
+
+    let filePath;
+    if (fileUrl.startsWith(bucketUrlPrefix)) {
+      filePath = fileUrl.replace(bucketUrlPrefix, "");
+    } else {
+      // Fallback for different URL structures or just try to use the url suffix if it matches known patterns or fail
+      // If it's a relative path stored, use it directly (though current logic stores absolute)
+      if (!fileUrl.startsWith("http")) {
+        filePath = fileUrl.startsWith('/') ? fileUrl.slice(1) : fileUrl;
+      } else {
+        return res.status(400).send("Invalid file URL format");
+      }
+    }
+
+    const file = bucket.file(filePath);
+    const [exists] = await file.exists();
+    if (!exists) {
+      return res.status(404).send("File not found");
+    }
+
+    // Determine filename for download
+    const downloadName = fileName || path.basename(filePath);
+
+    res.setHeader('Content-Disposition', `attachment; filename="${downloadName}"`);
+
+    file.createReadStream()
+      .on('error', (err) => {
+        console.error("Stream error:", err);
+        res.status(500).send("Error streaming file");
+      })
+      .pipe(res);
+
+  } catch (error) {
+    console.error("Download proxy error:", error);
+    res.status(500).send("Error processing download");
+  }
+});
+
 // Basic route
 app.get("/", (req, res) => {
   res.send("E-Health API is running");
 });
 
 // Start server
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "prod") {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

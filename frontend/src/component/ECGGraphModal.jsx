@@ -4,6 +4,12 @@ import { X, Activity, Heart, Thermometer, Wind } from "lucide-react";
 const ECGGraphModal = ({ isOpen, onClose, patientName, sensorData }) => {
     const [dataPoints, setDataPoints] = useState([]);
     const requestRef = useRef();
+    const sensorDataRef = useRef(sensorData);
+
+    // Keep ref in sync with props to avoid stale closures in the animation loop
+    useEffect(() => {
+        sensorDataRef.current = sensorData;
+    }, [sensorData]);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -19,37 +25,36 @@ const ECGGraphModal = ({ isOpen, onClose, patientName, sensorData }) => {
         const updateGraph = () => {
             setDataPoints((prev) => {
                 const newPoints = [...prev.slice(1)];
+                const currentSensorData = sensorDataRef.current;
 
-                // User requested random pattern/simulation because real values are "not good"
-                // Standard PQRST Wave Pattern (approximate)
-                const pqrst = [
-                    50, 50, 50, 50, 50, 50, 50, 50, // Baseline
-                    52, 55, 58, 55, 52, 50,         // P wave
-                    50, 50, 50,                     // PR segment
-                    45, 95, 20, 50,                 // QRS complex (Down-Up-Down)
-                    50, 50, 50,                     // ST segment
-                    52, 58, 62, 58, 52, 50,         // T wave
-                    50, 50, 50, 50, 50              // Baseline
-                ];
-
-                // Cycle through the pattern
-                const index = tick % pqrst.length;
-
-                // User requested to multiply pattern by sensorData.ecg
-                let multiplier = 1;
-                if (sensorData?.ecg) {
-                    let parsed = parseFloat(sensorData.ecg);
-                    if (!isNaN(parsed)) {
-                        multiplier = parsed * 25;  // scale tiny ECG values
-                    }
+                // Parse ECG value
+                let ecgValue = 0;
+                if (currentSensorData?.ecg) {
+                    ecgValue = parseFloat(currentSensorData.ecg);
                 }
 
-                // Apply multiplication
-                let val = pqrst[index] * multiplier;
+                // CHECK: If ECG is exactly 0 (or invalid), show flatline
+                if (!ecgValue || ecgValue === 0) {
+                    newPoints.push(50); // Center line
+                    tick++;
+                    return newPoints;
+                }
 
-                // Add slight noise relative to multiplier
-                const noise = (Math.random() * 2 - 1) * multiplier * 0.1;
-                val += noise;
+                // Loose Electrode / Noisy Signal Simulation
+                // 1. Baseline wander (low frequency)
+                const baselineWander = Math.sin(tick * 0.05) * 15;
+
+                // 2. High frequency noise (random fuzz)
+                const highFreqNoise = (Math.random() - 0.5) * 20;
+
+                // 3. Occasional artifacts/spikes (simulating contact loss)
+                let artifact = 0;
+                if (Math.random() > 0.98) {
+                    artifact = (Math.random() - 0.5) * 150; // Large spike
+                }
+
+                // Combine components around a central baseline of 50
+                let val = 50 + baselineWander + highFreqNoise + artifact;
 
                 newPoints.push(val);
 
@@ -172,7 +177,7 @@ const ECGGraphModal = ({ isOpen, onClose, patientName, sensorData }) => {
                             <span className="text-4xl font-mono font-bold text-white leading-none">
                                 {sensorData?.respirationRate || "--"}
                             </span>
-                            <span className="text-gray-500 text-sm mb-1">rpm</span>
+                            <span className="text-gray-500 text-sm mb-1">bpm</span>
                         </div>
                     </div>
 
