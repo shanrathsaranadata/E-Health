@@ -38,9 +38,9 @@ const ECGGraphModal = ({ isOpen, onClose, patientName, sensorData }) => {
                 // User requested to multiply pattern by sensorData.ecg
                 let multiplier = 1;
                 if (sensorData?.ecg) {
-                    const parsed = parseFloat(sensorData.ecg);
+                    let parsed = parseFloat(sensorData.ecg);
                     if (!isNaN(parsed)) {
-                        multiplier = parsed;
+                        multiplier = parsed * 25;  // scale tiny ECG values
                     }
                 }
 
