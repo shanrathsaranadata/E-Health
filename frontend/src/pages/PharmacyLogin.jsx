@@ -15,7 +15,7 @@ const PharmacyLogin = () => {
     try {
       const pharmacyId = pharmacyId2.toUpperCase();
       const response = await fetch(
-        "http://localhost:5000/pharmacies/login",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/login",
         {
           method: "POST",
           headers: {

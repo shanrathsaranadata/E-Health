@@ -35951,11 +35951,11 @@
                         .concat(e.proxyServer, "/ap/?url=")
                         .concat(
                           t +
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         )
                       : "https://".concat(
                         t,
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       ),
                     areaCode: YV(),
                   })),
@@ -36002,11 +36002,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       )
                     : "https://".concat(
                       t,
-                      "http://localhost:5000/v2/transpond/webrtc?v=2"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                     ),
                   areaCode: YV(),
                 })),
@@ -36156,12 +36156,12 @@
             ? o.map((e) =>
               "https://"
                 .concat(t.proxyServer, "/ap/?url=")
-                .concat(e + "http://localhost:5000/v1")
+                .concat(e + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
             )
             : o.map((e) =>
               "https://".concat(
                 e,
-                "http://localhost:5000/v1"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1"
               )
             );
           const s =
@@ -36289,12 +36289,12 @@
             ? i.map((e) =>
               "https://"
                 .concat(t.proxyServer, "/ap/?url=")
-                .concat(e + "http://localhost:5000/v1")
+                .concat(e + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
             )
             : i.map((e) =>
               "https://".concat(
                 e,
-                "http://localhost:5000/v1"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1"
               )
             );
           try {
@@ -36362,10 +36362,10 @@
               e.proxyServer
                 ? "https://"
                   .concat(e.proxyServer, "/ap/?url=")
-                  .concat(t + "http://localhost:5000/v1")
+                  .concat(t + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
                 : "https://".concat(
                   t,
-                  "http://localhost:5000/v1?action=config"
+                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=config"
                 )
             ),
             r = i.map((i) =>
@@ -36469,7 +36469,7 @@
             .map((e) => ({
               url: "https://".concat(
                 e,
-                "http://localhost:5000/v2/transpond/webrtc?v=2"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
               ),
               areaCode: YV(),
               serviceIds: [GU.CHOOSE_SERVER, GU.CLOUD_PROXY_FALLBACK],
@@ -36629,7 +36629,7 @@
                         ? o(
                           "".concat(
                             t,
-                            "http://localhost:5000/v2/transpond/webrtc?v=2"
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                           ),
                           n,
                           e.proxyServer
@@ -36638,12 +36638,12 @@
                           "fallback" === e.cloudProxyServer
                           ? "https://".concat(
                             t,
-                            "http://localhost:5000/v2/transpond/webrtc?v=2"
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                           )
                           : o(
                             "".concat(
                               t,
-                              "http://localhost:5000/v2/transpond/webrtc?v=2"
+                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                             ),
                             n
                           )),
@@ -36707,7 +36707,7 @@
                       ? o(
                         "".concat(
                           t,
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         ),
                         n,
                         e.proxyServer
@@ -36716,12 +36716,12 @@
                         "fallback" === e.cloudProxyServer
                         ? "https://".concat(
                           t,
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         )
                         : o(
                           "".concat(
                             t,
-                            "http://localhost:5000/v2/transpond/webrtc?v=2"
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                           ),
                           n
                         )),
@@ -36816,11 +36816,11 @@
                   .concat(e.proxyServer, "/ap/?url=")
                   .concat(
                     t +
-                    "http://localhost:5000/v1?action=uap"
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                   )
                 : "https://".concat(
                   t,
-                  "http://localhost:5000/v1?action=uap"
+                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                 )
             ),
             r = i.map((i) =>
@@ -36920,11 +36920,11 @@
                     .concat(e.proxyServer, "/ap/?url=")
                     .concat(
                       t +
-                      "http://localhost:5000/v2/transpond/webrtc?v=2"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                     )
                   : "https://".concat(
                     t,
-                    "http://localhost:5000/v2/transpond/webrtc?v=2"
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                   )
               );
               return o && (await TO(1e3), null !== i)
@@ -47371,7 +47371,7 @@
             const i = CN("WEBCS_DOMAIN").map((e) =>
               "https://".concat(
                 e,
-                "http://localhost:5000/v1"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1"
               )
             ),
               r = await (function (e, t, n, i) {
@@ -52340,11 +52340,11 @@
                                 .concat(t.proxyServer, "/ap/?url=")
                                 .concat(
                                   e +
-                                  "http://localhost:5000/v1?action=uap"
+                                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                                 )
                               : "https://".concat(
                                 e,
-                                "http://localhost:5000/v1?action=uap"
+                                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                               )
                           );
                         return await oF(r, e, t, n, i);
@@ -59949,7 +59949,7 @@
             const i = CN("WEBCS_DOMAIN").map((e) =>
               "https://".concat(
                 e,
-                "http://localhost:5000/v1"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1"
               )
             ),
               r = await (function (e, t, n, i) {
@@ -79526,7 +79526,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "http://localhost:5000/doctors/login",
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79661,7 +79661,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "http://localhost:5000/patients/login",
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/patients/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79795,7 +79795,7 @@
                       n.preventDefault(), s("");
                       try {
                         const n = await fetch(
-                          "http://localhost:5000/pharmacies/login",
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/login",
                           {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -79980,7 +79980,7 @@
                         if (s === c)
                           try {
                             const t = await fetch(
-                              "http://localhost:5000/doctors/register",
+                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80239,7 +80239,7 @@
                         if (c === d)
                           try {
                             const t = await fetch(
-                              "http://localhost:5000/patients/register",
+                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/patients/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80487,7 +80487,7 @@
                         if (d === l)
                           try {
                             const t = await fetch(
-                              "http://localhost:5000/pharmacies/register",
+                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/register",
                               {
                                 method: "POST",
                                 headers: {
@@ -80773,7 +80773,7 @@
               r(e), a(""), c(!0);
               try {
                 const t = await fetch(
-                  "http://localhost:5000/api/chat",
+                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/api/chat",
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -83488,7 +83488,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "http://localhost:5000/doctors/profile",
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -83552,7 +83552,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token")),
                           i = await Qi.put(
-                            "http://localhost:5000/doctors/profileupdate",
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/profileupdate",
                             {
                               name: e.name,
                               email: e.email,
@@ -83811,7 +83811,7 @@
           const m = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/doctors/appointments",
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments",
                 {
                   headers: { Authorization: "Bearer ".concat(_) },
                 }
@@ -83934,7 +83934,7 @@
                                             (async (e) => {
                                               try {
                                                 await Qi.put(
-                                                  "http://localhost:5000/doctors/appointments/".concat(
+                                                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/".concat(
                                                     e,
                                                     "/accept"
                                                   ),
@@ -83988,7 +83988,7 @@
                                             (async (e) => {
                                               try {
                                                 await Qi.put(
-                                                  "http://localhost:5000/doctors/appointments/".concat(
+                                                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/".concat(
                                                     e,
                                                     "/reject"
                                                   ),
@@ -84111,7 +84111,7 @@
                                   onClick: async () => {
                                     try {
                                       await Qi.put(
-                                        "http://localhost:5000/doctors/appointments/".concat(
+                                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments/".concat(
                                           n.id,
                                           "/reschedule"
                                         ),
@@ -84184,7 +84184,7 @@
           const y = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/doctors/appointments",
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments",
                 {
                   headers: { Authorization: "Bearer ".concat(T) },
                 }
@@ -84299,7 +84299,7 @@
                                         (async (e) => {
                                           try {
                                             const t = await Qi.post(
-                                              "http://localhost:5000/video-call/token",
+                                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
                                               { appointmentId: e._id },
                                               {
                                                 headers: {
@@ -84357,7 +84357,7 @@
                                           l(e), h(""), a(!0);
                                           try {
                                             const t = await Qi.get(
-                                              "http://localhost:5000/prescriptions/".concat(
+                                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/".concat(
                                                 e._id
                                               ),
                                               {
@@ -84386,7 +84386,7 @@
                                         (async (e) => {
                                           try {
                                             const t = await Qi.get(
-                                              "http://localhost:5000/sensor-data/".concat(
+                                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/".concat(
                                                 e.patientId
                                               ),
                                               {
@@ -84468,7 +84468,7 @@
                                       try {
                                         let e;
                                         const t = await Qi.get(
-                                          "http://localhost:5000/prescriptions/".concat(
+                                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/".concat(
                                             d._id
                                           ),
                                           {
@@ -84482,7 +84482,7 @@
                                         (e =
                                           null !== t && void 0 !== t && t.data
                                             ? await Qi.put(
-                                              "http://localhost:5000/prescriptions/".concat(
+                                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/".concat(
                                                 d._id
                                               ),
                                               { description: u },
@@ -84494,7 +84494,7 @@
                                               }
                                             )
                                             : await Qi.post(
-                                              "http://localhost:5000/prescriptions",
+                                              "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions",
                                               {
                                                 appointmentId: d._id,
                                                 description: u,
@@ -84775,7 +84775,7 @@
           const p = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/messages/".concat(
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages/".concat(
                   h._id
                 ),
                 {
@@ -84791,7 +84791,7 @@
               if (a.trim())
                 try {
                   const e = await Qi.post(
-                    "http://localhost:5000/messages",
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages",
                     { appointmentId: h._id, text: a },
                     { headers: { Authorization: "Bearer ".concat(u) } }
                   );
@@ -85045,7 +85045,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "http://localhost:5000/patients/profile",
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/patients/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -85104,7 +85104,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token"));
                         await Qi.put(
-                          "http://localhost:5000/patients/profileupdate",
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/patients/profileupdate",
                           {
                             name: e.name,
                             email: e.email,
@@ -85357,7 +85357,7 @@
           const h = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/doctors"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors"
               );
               s(e.data);
             } catch (e) {
@@ -85367,7 +85367,7 @@
             p = async () => {
               try {
                 const e = await Qi.get(
-                  "http://localhost:5000/appointments/".concat(
+                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments/".concat(
                     l
                   ),
                   {
@@ -85472,7 +85472,7 @@
                             (async (e) => {
                               try {
                                 await Qi.delete(
-                                  "http://localhost:5000/appointments/".concat(
+                                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments/".concat(
                                     e
                                   ),
                                   {
@@ -85693,7 +85693,7 @@
                                 if (e && t && i && r && a && s)
                                   try {
                                     const c = await Qi.post(
-                                      "http://localhost:5000/appointments",
+                                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/appointments",
                                       {
                                         patientId: l,
                                         specialty: e,
@@ -91346,7 +91346,7 @@
           try {
             const e = (
               await Qi.get(
-                "http://localhost:5000/pharmacy-address"
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy-address"
               )
             ).data.map((e) => ({ value: e, label: e }));
             d(e);
@@ -91357,7 +91357,7 @@
           O = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/patient/appointments/".concat(
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/patient/appointments/".concat(
                   I
                 ),
                 {
@@ -91477,7 +91477,7 @@
                               (async (e) => {
                                 try {
                                   const t = await Qi.post(
-                                    "http://localhost:5000/video-call/token",
+                                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
                                     { appointmentId: e._id },
                                     {
                                       headers: {
@@ -91620,7 +91620,7 @@
                                   try {
                                     const t = (
                                       await Qi.get(
-                                        "http://localhost:5000/pharmacies/".concat(
+                                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/".concat(
                                           e
                                         )
                                       )
@@ -91691,7 +91691,7 @@
                                   : i.prescriptionId;
                               if ((console.log(r), !r)) return;
                               await Qi.post(
-                                "http://localhost:5000/prescription/delivery/".concat(
+                                "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescription/delivery/".concat(
                                   r
                                 ),
                                 Me(
@@ -91814,7 +91814,7 @@
           const p = async () => {
             try {
               const e = await Qi.get(
-                "http://localhost:5000/messages/".concat(
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages/".concat(
                   h._id
                 ),
                 {
@@ -91830,7 +91830,7 @@
               if (a.trim())
                 try {
                   const e = await Qi.post(
-                    "http://localhost:5000/messages",
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages",
                     { appointmentId: h._id, text: a },
                     { headers: { Authorization: "Bearer ".concat(u) } }
                   );
@@ -92068,7 +92068,7 @@
               try {
                 const e = JSON.parse(localStorage.getItem("token")),
                   n = await Qi.get(
-                    "http://localhost:5000/pharmacy/profile",
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/profile",
                     {
                       headers: { Authorization: "Bearer ".concat(e) },
                     }
@@ -92133,7 +92133,7 @@
                       try {
                         const n = JSON.parse(localStorage.getItem("token")),
                           i = await Qi.put(
-                            "http://localhost:5000/pharmacy/profileupdate",
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/profileupdate",
                             {
                               pharmacyName: e.pharmacyName,
                               email: e.email,
@@ -92389,7 +92389,7 @@
             try {
               a(!0);
               const e = await Qi.get(
-                "http://localhost:5000/pharmacy/prescriptions",
+                "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/prescriptions",
                 {
                   headers: { Authorization: "Bearer ".concat(d) },
                 }
@@ -92405,7 +92405,7 @@
             u = async (e, n) => {
               try {
                 await Qi.put(
-                  "http://localhost:5000/pharmacy/prescriptions/".concat(
+                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/prescriptions/".concat(
                     e,
                     "/status"
                   ),
@@ -124183,11 +124183,11 @@
                         .concat(e.proxyServer, "/ap/?url=")
                         .concat(
                           t +
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         )
                       : "https://".concat(
                         t,
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       ),
                     areaCode: qH(),
                   })),
@@ -124234,11 +124234,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       )
                     : "https://".concat(
                       t,
-                      "http://localhost:5000/v2/transpond/webrtc?v=2"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                     ),
                   areaCode: qH(),
                 })),
@@ -124384,10 +124384,10 @@
           ? o.map((e) =>
             "https://"
               .concat(t.proxyServer, "/ap/?url=")
-              .concat(e + "http://localhost:5000/v1")
+              .concat(e + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           )
           : o.map((e) =>
-            "https://".concat(e, "http://localhost:5000/v1")
+            "https://".concat(e, "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           );
         let s =
           null === r || void 0 === r
@@ -124516,10 +124516,10 @@
           ? i.map((e) =>
             "https://"
               .concat(t.proxyServer, "/ap/?url=")
-              .concat(e + "http://localhost:5000/v1")
+              .concat(e + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           )
           : i.map((e) =>
-            "https://".concat(e, "http://localhost:5000/v1")
+            "https://".concat(e, "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           );
         try {
           return await pK({
@@ -124579,7 +124579,7 @@
           .map((e) => ({
             url: "https://".concat(
               e,
-              "http://localhost:5000/v2/transpond/webrtc?v=2"
+              "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
             ),
             areaCode: qH(),
             serviceIds: [AU.CHOOSE_SERVER, AU.CLOUD_PROXY_FALLBACK],
@@ -124737,7 +124737,7 @@
                       ? c(
                         "".concat(
                           t,
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         ),
                         n,
                         e.proxyServer
@@ -124746,12 +124746,12 @@
                         "fallback" === e.cloudProxyServer
                         ? "https://".concat(
                           t,
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         )
                         : c(
                           "".concat(
                             t,
-                            "http://localhost:5000/v2/transpond/webrtc?v=2"
+                            "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                           ),
                           n
                         )),
@@ -124815,7 +124815,7 @@
                     ? c(
                       "".concat(
                         t,
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       ),
                       n,
                       e.proxyServer
@@ -124824,12 +124824,12 @@
                       "fallback" === e.cloudProxyServer
                       ? "https://".concat(
                         t,
-                        "http://localhost:5000/v2/transpond/webrtc?v=2"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                       )
                       : c(
                         "".concat(
                           t,
-                          "http://localhost:5000/v2/transpond/webrtc?v=2"
+                          "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                         ),
                         n
                       )),
@@ -124923,11 +124923,11 @@
                     .concat(e.proxyServer, "/ap/?url=")
                     .concat(
                       t +
-                      "http://localhost:5000/v2/transpond/webrtc?v=2"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                     )
                   : "https://".concat(
                     t,
-                    "http://localhost:5000/v2/transpond/webrtc?v=2"
+                    "https://us-central1-e-health-7d458.cloudfunctions.net/api/v2/transpond/webrtc?v=2"
                   )
             );
             return o && (await aL(1e3), null !== i)
@@ -125155,11 +125155,11 @@
                     ? "https://"
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
-                        t + "http://localhost:5000/v1"
+                        t + "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1"
                       )
                     : "https://".concat(
                       t,
-                      "http://localhost:5000/v1?action=config"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=config"
                     )
                 )
                 .map((i) =>
@@ -141637,7 +141637,7 @@
         }
         async requestAP(e, t, n) {
           let i = xL("WEBCS_DOMAIN").map((e) =>
-            "https://".concat(e, "http://localhost:5000/v1")
+            "https://".concat(e, "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           ),
             r = await (function (e, t, n, i) {
               let {
@@ -145965,11 +145965,11 @@
                                 .concat(t.proxyServer, "/ap/?url=")
                                 .concat(
                                   e +
-                                  "http://localhost:5000/v1?action=uap"
+                                  "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                                 )
                               : "https://".concat(
                                 e,
-                                "http://localhost:5000/v1?action=uap"
+                                "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                               )
                           );
                         return await (function (e, t, n, i, r) {
@@ -151743,11 +151743,11 @@
                       .concat(e.proxyServer, "/ap/?url=")
                       .concat(
                         t +
-                        "http://localhost:5000/v1?action=uap"
+                        "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                       )
                     : "https://".concat(
                       t,
-                      "http://localhost:5000/v1?action=uap"
+                      "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1?action=uap"
                     )
                 )
                 .map((i) =>
@@ -153326,7 +153326,7 @@
         }
         async requestAP(e, t, n) {
           let i = xL("WEBCS_DOMAIN").map((e) =>
-            "https://".concat(e, "http://localhost:5000/v1")
+            "https://".concat(e, "https://us-central1-e-health-7d458.cloudfunctions.net/api/v1")
           ),
             r = await (function (e, t, n, i) {
               let {

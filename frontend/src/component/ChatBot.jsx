@@ -25,7 +25,7 @@ const ChatBot = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/chat",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/api/chat",
         {
           method: "POST",
           headers: {
@@ -93,8 +93,8 @@ const ChatBot = () => {
             <div
               key={idx}
               className={`text-sm px-3 py-2 rounded-md max-w-[80%] w-fit ${msg.type === "user"
-                  ? "bg-[#F26522] text-white self-end ml-auto"
-                  : "bg-gray-100 text-gray-800"
+                ? "bg-[#F26522] text-white self-end ml-auto"
+                : "bg-gray-100 text-gray-800"
                 }`}
             >
               {msg.text}
@@ -117,8 +117,8 @@ const ChatBot = () => {
             onClick={handleSend}
             disabled={isLoading}
             className={`bg-[#F26522] text-white px-3 py-2 rounded-md transition ${isLoading
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-orange-600"
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-orange-600"
               }`}
           >
             <SendHorizontal size={16} />

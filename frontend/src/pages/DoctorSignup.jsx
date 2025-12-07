@@ -84,7 +84,7 @@ const DoctorSignup = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/doctors/register",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/register",
         {
           method: "POST",
           headers: {

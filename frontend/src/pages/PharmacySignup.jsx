@@ -61,7 +61,7 @@ const PharmacySignup = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/pharmacies/register",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacies/register",
         {
           method: "POST",
           headers: {

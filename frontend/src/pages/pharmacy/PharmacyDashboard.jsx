@@ -22,7 +22,7 @@ const PharmacyDashboard = () => {
   const fetchPrescriptions = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/pharmacy/prescriptions",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/prescriptions",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ const PharmacyDashboard = () => {
   const updateStatus = async (id, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/pharmacy/prescriptions/${id}/status`,
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/pharmacy/prescriptions/${id}/status`,
         { status: newStatus },
         {
           headers: {
@@ -63,7 +63,7 @@ const PharmacyDashboard = () => {
 
   const handleDownload = async (fileUrl, fileName = "prescription") => {
     try {
-      const response = await axios.get(`http://localhost:5000${fileUrl}`, {
+      const response = await axios.get(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -79,7 +79,7 @@ const PharmacyDashboard = () => {
     } catch (err) {
       console.error("Download failed:", err);
       // Fallback to basic link
-      window.open(`http://localhost:5000${fileUrl}`, "_blank");
+      window.open(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, "_blank");
     }
   };
 
@@ -207,7 +207,7 @@ const PharmacyDashboard = () => {
             {viewPrescription.fileUrl && (
               <div className="mb-4 flex gap-3">
                 <a
-                  href={`http://localhost:5000${viewPrescription.fileUrl}`}
+                  href={`https://us-central1-e-health-7d458.cloudfunctions.net/api${viewPrescription.fileUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 bg-[#F26522] text-white px-4 py-2 rounded-md hover:bg-orange-600 transition"

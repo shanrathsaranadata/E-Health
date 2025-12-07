@@ -10,23 +10,54 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Ensure uploads directory exists
+const admin = require("firebase-admin");
+// Initialize Firebase Admin
+// Uses GOOGLE_APPLICATION_CREDENTIALS or default service account
+// Ensure you have enabled "Authentication" and "Storage" in Firebase Console
+try {
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    storageBucket: process.env.STORAGE_BUCKET || "e-health-7d458.appspot.com",
+  });
+  console.log("Firebase Admin Initialized");
+} catch (error) {
+  console.error("Firebase Admin Initialization Error:", error);
+}
+// Ensure uploads directory exists (Legacy - keeping for safety but not used for new uploads)
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
-
-// Set up multer for file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
+// Set up multer for memory storage (for Firebase Upload)
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+// Helper function to upload to Firebase Storage
+async function uploadToFirebase(file) {
+  if (!file) return null;
+  const bucket = admin.storage().bucket();
+  const filename = `uploads/${Date.now()}_${path.basename(file.originalname)}`;
+  const fileUpload = bucket.file(filename);
+  return new Promise((resolve, reject) => {
+    const blobStream = fileUpload.createWriteStream({
+      metadata: {
+        contentType: file.mimetype,
+      },
+      public: true, // Make the file public
+    });
+    blobStream.on("error", (error) => {
+      console.error("Blob stream error:", error);
+      reject(error);
+    });
+    blobStream.on("finish", () => {
+      // publicUrl format: https://storage.googleapis.com/BUCKET_NAME/FILE_NAME
+      // Or: https://firebasestorage.googleapis.com/v0/b/BUCKET_NAME/o/FILE_NAME?alt=media
+      // Using the public Google Storage URL for simplicity with 'public: true'
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
+      resolve(publicUrl);
+    });
+    blobStream.end(file.buffer);
+  });
+}
 
 const app = express();
 
@@ -939,14 +970,18 @@ app.put("/doctors/appointments/:id/reject", auth, async (req, res) => {
 });
 
 // Upload Prescription
-// Upload Prescription
 app.post("/prescriptions", auth, upload.single("file"), async (req, res) => {
   try {
     const { appointmentId, description } = req.body;
     let fileUrl = "";
 
     if (req.file) {
-      fileUrl = `/uploads/${req.file.filename}`;
+      try {
+        fileUrl = await uploadToFirebase(req.file);
+      } catch (error) {
+        console.error("Upload failed", error);
+        return res.status(500).json({ message: "Error uploading file to storage" });
+      }
     }
 
     const appointment = await Appointment.findById(appointmentId);
@@ -1228,7 +1263,12 @@ app.put("/prescriptions/:appointmentId", auth, upload.single("file"), async (req
     prescription.description = description;
 
     if (req.file) {
-      prescription.fileUrl = `/uploads/${req.file.filename}`;
+      try {
+        fileUrl = await uploadToFirebase(req.file);
+      } catch (error) {
+        console.error("Upload failed", error);
+        return res.status(500).json({ message: "Error uploading file to storage" });
+      }
     }
 
     await prescription.save();
@@ -1376,7 +1416,12 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+// Export the Express API as a Cloud Function
+const functions = require("firebase-functions");
+exports.api = functions.https.onRequest(app);

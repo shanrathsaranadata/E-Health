@@ -16,6 +16,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import axios from "axios";
+import ECGGraphModal from "../component/ECGGraphModal";
 
 const VideoCall = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const VideoCall = () => {
   const client = useRef(null);
   const [sensorData, setSensorData] = useState(null);
   const token = JSON.parse(localStorage.getItem("token"));
+  const [showECGModal, setShowECGModal] = useState(false);
 
   useEffect(() => {
     // Redirect if no video call data
@@ -172,6 +174,28 @@ const VideoCall = () => {
     };
   }, [videoCallData, navigate]);
 
+  useEffect(() => {
+    fetchsensordata();
+    // Set up interval to fetch messages every 3 seconds
+    const intervalId = setInterval(fetchsensordata, 5000);
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const fetchsensordata = async () => {
+    try {
+      const response = await axios.get(
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/all`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setSensorData(response.data);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
   // Toggle audio mute/unmute
   const toggleAudio = () => {
     if (localAudioTrack) {
@@ -199,7 +223,7 @@ const VideoCall = () => {
     if (videoCallData.appointment?._id) {
       try {
         await axios.post(
-          "http://localhost:5000/video-call/end",
+          "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/end",
           {
             appointmentId: videoCallData.appointment._id,
           },
@@ -220,13 +244,6 @@ const VideoCall = () => {
 
   const handleSensorData = async (appointment) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/sensor-data/all`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setSensorData(response.data);
       setShowSensorModal(true);
     } catch (err) {
       console.error("Error fetching sensor data:", err);
@@ -391,7 +408,11 @@ const VideoCall = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* ECG */}
-              <div className="border rounded-lg p-4 shadow-sm flex flex-col items-center text-center">
+
+              <div
+                className="border rounded-lg p-4 shadow-sm flex flex-col items-center text-center cursor-pointer hover:shadow-md transition-shadow hover:scale-105 transform duration-200"
+                onClick={() => setShowECGModal(true)}
+              >
                 <svg
                   className="w-6 h-6 text-[#F26522] mb-2"
                   fill="none"
@@ -408,6 +429,7 @@ const VideoCall = () => {
                 <p className="font-semibold">ECG Wave</p>
                 <p className="text-sm text-gray-500">
                   {sensorData?.ecg || "N/A"}
+                  <span className="block text-xs text-[#F26522] mt-1">(Click to view Graph)</span>
                 </p>
               </div>
 
@@ -506,7 +528,16 @@ const VideoCall = () => {
             </div>
           </div>
         </div>
-      )}
+      )
+      }
+
+      {/* ECG Graph Modal */}
+      <ECGGraphModal
+        isOpen={showECGModal}
+        onClose={() => setShowECGModal(false)}
+        patientName={videoCallData.appointment.patientId}
+        sensorData={sensorData}
+      />
     </div>
   );
 };

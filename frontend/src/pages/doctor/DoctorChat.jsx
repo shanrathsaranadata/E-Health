@@ -3,6 +3,7 @@ import { ArrowLeft, SendHorizontal, Activity } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import DoctorSidebar from "../../component/DoctorSidebar";
 import axios from "axios";
+import ECGGraphModal from "../../component/ECGGraphModal";
 
 const DoctorChat = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const DoctorChat = () => {
   const appointment = location.state?.appointment;
   const [showSensorModal, setShowSensorModal] = useState(false);
   const [sensorData, setSensorData] = useState(null);
+  const [showECGModal, setShowECGModal] = useState(false);
 
   useEffect(() => {
     if (!appointment) {
@@ -25,7 +27,7 @@ const DoctorChat = () => {
     fetchMessages();
 
     // Set up interval to fetch messages every 3 seconds
-    const intervalId = setInterval(fetchMessages, 1000);
+    const intervalId = setInterval(fetchMessages, 5000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
@@ -34,12 +36,19 @@ const DoctorChat = () => {
   const fetchMessages = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/messages/${appointment._id}`,
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/messages/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       setMessages(response.data);
+      const response2 = await axios.get(
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/all`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setSensorData(response2.data);
       setLoading(false);
       console.log(response.data);
     } catch (error) {
@@ -53,7 +62,7 @@ const DoctorChat = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/messages",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/messages",
         {
           appointmentId: appointment._id,
           text: input,
@@ -72,13 +81,6 @@ const DoctorChat = () => {
 
   const handleSensorData = async (appointment) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/sensor-data/all`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setSensorData(response.data);
       setShowSensorModal(true);
     } catch (err) {
       console.error("Error fetching sensor data:", err);
@@ -180,7 +182,10 @@ const DoctorChat = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* ECG */}
-              <div className="border rounded-lg p-4 shadow-sm flex flex-col items-center text-center">
+              <div
+                className="border rounded-lg p-4 shadow-sm flex flex-col items-center text-center cursor-pointer hover:shadow-md transition-shadow hover:scale-105 transform duration-200"
+                onClick={() => setShowECGModal(true)}
+              >
                 <svg
                   className="w-6 h-6 text-[#F26522] mb-2"
                   fill="none"
@@ -197,6 +202,7 @@ const DoctorChat = () => {
                 <p className="font-semibold">ECG Wave</p>
                 <p className="text-sm text-gray-500">
                   {sensorData?.ecg || "N/A"}
+                  <span className="block text-xs text-[#F26522] mt-1">(Click to view Graph)</span>
                 </p>
               </div>
 
@@ -296,6 +302,13 @@ const DoctorChat = () => {
           </div>
         </div>
       )}
+
+      <ECGGraphModal
+        isOpen={showECGModal}
+        onClose={() => setShowECGModal(false)}
+        patientName={appointment.patientId}
+        sensorData={sensorData}
+      />
     </DoctorSidebar>
   );
 };

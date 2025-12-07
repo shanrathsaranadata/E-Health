@@ -52,7 +52,7 @@ const DoctorDashboard = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/doctors/appointments",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/doctors/appointments",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -60,7 +60,7 @@ const DoctorDashboard = () => {
       setAppointments(response.data);
       setLoading(false);
       const response2 = await axios.get(
-        `http://localhost:5000/sensor-data/all`,
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/sensor-data/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -80,7 +80,7 @@ const DoctorDashboard = () => {
   const handleVideoCall = async (appointment) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/video-call/token",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
         {
           appointmentId: appointment._id,
         },
@@ -128,7 +128,7 @@ const DoctorDashboard = () => {
 
   const handleDownload = async (fileUrl, fileName = "prescription") => {
     try {
-      const response = await axios.get(`http://localhost:5000${fileUrl}`, {
+      const response = await axios.get(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, {
         responseType: "blob",
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -144,7 +144,7 @@ const DoctorDashboard = () => {
     } catch (err) {
       console.error("Download failed:", err);
       // Fallback to basic link
-      window.open(`http://localhost:5000${fileUrl}`, "_blank");
+      window.open(`https://us-central1-e-health-7d458.cloudfunctions.net/api${fileUrl}`, "_blank");
     }
   };
 
@@ -157,7 +157,7 @@ const DoctorDashboard = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/prescriptions/${appointment._id}`,
+        `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${appointment._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -195,7 +195,7 @@ const DoctorDashboard = () => {
       // First try to get existing prescription
       const existingPrescription = await axios
         .get(
-          `http://localhost:5000/prescriptions/${selectedAppointment._id}`,
+          `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${selectedAppointment._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -208,7 +208,7 @@ const DoctorDashboard = () => {
         // If file is new, it will replace.
         // Note: Backend endpoint should treat this as update.
         response = await axios.put(
-          `http://localhost:5000/prescriptions/${selectedAppointment._id}`,
+          `https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions/${selectedAppointment._id}`,
           formData,
           {
             headers: {
@@ -221,7 +221,7 @@ const DoctorDashboard = () => {
         // Create new prescription
         formData.append("appointmentId", selectedAppointment._id);
         response = await axios.post(
-          "http://localhost:5000/prescriptions",
+          "https://us-central1-e-health-7d458.cloudfunctions.net/api/prescriptions",
           formData,
           {
             headers: {
@@ -247,7 +247,7 @@ const DoctorDashboard = () => {
     if (!incomingCall) return;
     try {
       const response = await axios.post(
-        "http://localhost:5000/video-call/token",
+        "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/token",
         {
           appointmentId: incomingCall._id,
         },
@@ -283,7 +283,7 @@ const DoctorDashboard = () => {
     if (selectedAppointment?._id) {
       try {
         await axios.post(
-          "http://localhost:5000/video-call/end",
+          "https://us-central1-e-health-7d458.cloudfunctions.net/api/video-call/end",
           {
             appointmentId: selectedAppointment._id,
           },
@@ -406,7 +406,7 @@ const DoctorDashboard = () => {
                   </label>
                   <div className="flex gap-3 mb-2">
                     <a
-                      href={`http://localhost:5000${existingFileUrl}`}
+                      href={`https://us-central1-e-health-7d458.cloudfunctions.net/api${existingFileUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-200 transition"
@@ -703,7 +703,7 @@ const DoctorDashboard = () => {
       <ECGGraphModal
         isOpen={showECGModal}
         onClose={() => setShowECGModal(false)}
-        patientName={selectedAppointment?.patientName}
+        patientName={selectedAppointment?._id}
         sensorData={sensorData}
       />
     </DoctorSidebar >
