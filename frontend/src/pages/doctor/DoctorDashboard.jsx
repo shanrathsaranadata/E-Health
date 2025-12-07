@@ -25,7 +25,7 @@ const DoctorDashboard = () => {
 
   useEffect(() => {
     fetchAppointments();
-    const intervalId = setInterval(fetchAppointments, 100000);
+    const intervalId = setInterval(fetchAppointments, 1000);
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
